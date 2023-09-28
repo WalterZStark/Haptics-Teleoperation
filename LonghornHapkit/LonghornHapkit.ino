@@ -32,6 +32,7 @@ double lastLastXh = 0;
 double lastVh = 0;
 double lastLastVh = 0;
 
+
 // Kinematics variables
 double xh = 0;           // position of the handle [m]
 double vh = 0;
@@ -78,7 +79,17 @@ double C = 0.5; // N
 
 // Static Friction
 double D = 2; // N
-double deltaV = 0.5; // m/s
+double deltaV = 1; // m/s
+
+// Choose mode
+int mode = 119;
+// Wall : w
+// Linear Damping: l
+// Nonlinear Friction: n 
+// Hard Surface: h
+// Bump and Valley: b
+// Texture: t
+
 
 
 
@@ -89,15 +100,15 @@ double deltaV = 0.5; // m/s
 void setup()
 {
   // Set Up Serial
-  Serial.begin(115200);
+  Serial.begin(9600);
+  Serial.println("Start Setup");
+  // Output Pins
+  pinMode(PWMoutp, OUTPUT);
+  pinMode(PWMoutn, OUTPUT);
+  pinMode(PWMspeed, OUTPUT);
 
- // Output Pins
- pinMode(PWMoutp, OUTPUT);
- pinMode(PWMoutn, OUTPUT);
- pinMode(PWMspeed, OUTPUT);
-
- // Haptic Loop Timer Initalization
-   Timer1.initialize(); 
+  // Haptic Loop Timer Initalization
+  Timer1.initialize(); 
   long period = 1000; // [us]  10000 [us] - 100 Hz 
   Timer1.attachInterrupt(hapticLoop,period); 
 
@@ -110,7 +121,7 @@ void setup()
   digitalWrite(PWMoutp, HIGH);
   digitalWrite(PWMoutn, LOW);
   analogWrite(PWMspeed, 0);
-  
+  Serial.println("Exiting Init");
 }
 
 //--------------------------------------------------------------------------
@@ -119,6 +130,7 @@ void setup()
 
 void loop()
 {
+  Serial.println("Entering Loop");
     if(timeoutOccured)
   {
     Serial.println("timeout occured");
@@ -128,155 +140,173 @@ void loop()
 // --------------------------
 // Haptic Loop
 // --------------------------
-  void hapticLoop()
+void hapticLoop()
+{
+  // See if flag is out (couldn't finish before another call) 
+  if(hapticLoopFlagOut)
   {
+    timeoutOccured = true;
+  }
 
-      // See if flag is out (couldn't finish before another call) 
-      if(hapticLoopFlagOut)
-      {
-        timeoutOccured = true;
+  //*************************************************************
+  //*** Section 1. Compute position and velocity using encoder (DO NOT CHANGE!!) ***  
+  //*************************************************************
+  Serial.println("Section 1");
+  pos = encoder.read();
+  Serial.println("Section 1.1");
+  double vel = (.80)*lastVel + (.20)*(pos - lastPos)/(.01);
+
+  // Serial.print("Enc_Pos:");
+  // Serial.println(pos, 5);
+
+
+  //*************************************************************
+  //*** Section 2. Compute handle position in meters ************
+  //*************************************************************
+  Serial.println("Section 2");
+  // ADD YOUR CODE HERE
+
+  // SOLUTION:
+  // Define kinematic parameters you may need
+  //int CPR = 48; // Counts per revolution
+
+
+  // Step 2.1: print updatedPos via serial monitor
+  //*************************************************************
+  Serial.println("Section 2.1");
+  // Need the count of number of rotations
+  double updatedPos = (pos)/encoderResolution;
+  //Serial.println(updatedPos);
+
+  // Step 2.2: Compute the angle of the sector pulley (ts) in degrees based on updatedPos
+  //*************************************************************
+  Serial.println("Section 2.2");
+  double ts = rp*updatedPos*360/(rs);
+  //double ts = -.0107*updatedPos + 4.9513; // NOTE - THESE NUMBERS MIGHT NOT BE CORRECT! USE KINEMATICS TO FIGRUE IT OUT!
+  //Serial.println(ts);
+  // Step 2.3: Compute the position of the handle based on ts
+  //*************************************************************
+  Serial.println("Section 2.3");
+  xh = rh*(ts*3.14159/180);       // Again, these numbers may not be correct. You need to determine these relationships. 
+
+  // Step 2.4: print xh via serial monitor
+  //*************************************************************
+  Serial.println("Section 2.4");
+  // Serial.print("  Handle_pos: ");
+  // Serial.print(xh,3);
+     
+  // Step 2.5: compute handle velocity
+  //*************************************************************
+  Serial.println("Section 2.5");
+  vh = -(.95*.95)*lastLastVh + 2*.95*lastVh + (1-.95)*(1-.95)*(xh-lastXh)/.0001;  // filtered velocity (2nd-order filter)
+  lastXh = xh;
+  lastLastVh = lastVh;
+  lastVh = vh;
+        
+  //*************************************************************
+  //*** Section 3. Assign a motor output force in Newtons *******  
+  //*************************************************************
+  Serial.println("Section 3");
+  /*
+  // Init force 
+  double force = 0.5; // Force in newtons
+  double K = 125;   // spring stiffness
+  Tp = (rh*rp)/rs * force; // output torque
+  //Serial.println(Tp,5);
+  force = -K*xh;
+        
+  */
+
+  // This is just a simple example of a haptic wall that only uses encoder position.
+  // You will need to add the rest of the following cases. You will want to enable some way to select each case. 
+  // Options for this are #DEFINE statements, swtich case statements (i.e., like a key press in serial monitor), or 
+  // some other method. 
+    
+    // Select mode
+    if (Serial.available() > 0) {
+         mode = Serial.read();
       }
-      //*************************************************************
-      //*** Section 1. Compute position and velocity using encoder (DO NOT CHANGE!!) ***  
-      //*************************************************************
-      pos = encoder.read();
-      double vel = (.80)*lastVel + (.20)*(pos - lastPos)/(.01);
-      //Serial.println(pos);
-
-        //*************************************************************
-        //*** Section 2. Compute handle position in meters ************
-        //*************************************************************
+    
+    switch (mode) {
+  case 119:
+      // Virtual Wall (w)
+      //*************************************************************    
+      Serial.print("Wall");      
+      if (xh > x_wall) // IF position < x_wall
+      {
+        // Added min and maximum to prevent buzzing and slipping on cable
+        // Chose K_wall to be slightly less than K = 125 becasue K=125 is the maximum K value we found that preforms well
+        force = constrain(-K_wall*(xh-x_wall),-2.45, -1); // THEN Force = - k_wall  x_wall
+      }
+      else // ELSE
+      {
+        force = 0; // THEN Force = 0
+      }
+      break;
       
-          // ADD YOUR CODE HERE
+  case 108:
+    // Linear Damping (l)
+    //*************************************************************
+    Serial.print("Linear Damping");
+    force = -vh*B; // Implement Linear Damping Equation
+    break;
 
-          // SOLUTION:
-          // Define kinematic parameters you may need
-          //int CPR = 48; // Counts per revolution
+  case 110:
+    // Nonlinear Friction (n)
+    //*************************************************************
+    Serial.print("Nonlinear Friction");
+    
+    
+  // double Fa = a * m;
+    if(abs(vh)<deltaV) // IF velocity is small enough for static friction
+    {
+      force = -sign(vh)*D; // Find the force of hand from acceleration
+    }
+  
+    else // ELSE implement vicous damping and dynamic friction
+    {
+      force = -C*sign(vh) - B*vh;
+    }
+  
+    //Serial.println(abs(vh));
 
+    break;
 
+    
+  case 104:
+    // A Hard Surface (h)
+    //*************************************************************
+    Serial.print("Hard Surface");
 
-          // Step 2.1: print updatedPos via serial monitor
-          //*************************************************************
-          // Need the count of number of rotations
-          double updatedPos = (pos)/encoderResolution;
-          //Serial.println(updatedPos);
-           
-          // Step 2.2: Compute the angle of the sector pulley (ts) in degrees based on updatedPos
-         //*************************************************************
-          double ts = rp*updatedPos*360/(rs);
-          //double ts = -.0107*updatedPos + 4.9513; // NOTE - THESE NUMBERS MIGHT NOT BE CORRECT! USE KINEMATICS TO FIGRUE IT OUT!
-          //Serial.println(ts);
-         // Step 2.3: Compute the position of the handle based on ts
-          //*************************************************************
-
-          xh = rh*(ts*3.14159/180);       // Again, these numbers may not be correct. You need to determine these relationships. 
-        
-          // Step 2.4: print xh via serial monitor
-          //*************************************************************
-
-          //Serial.println(xh,5);
-           
-          // Step 2.5: compute handle velocity
-          //*************************************************************
-           vh = -(.95*.95)*lastLastVh + 2*.95*lastVh + (1-.95)*(1-.95)*(xh-lastXh)/.0001;  // filtered velocity (2nd-order filter)
-           lastXh = xh;
-           lastLastVh = lastVh;
-           lastVh = vh;
-           
-        //*************************************************************
-        //*** Section 3. Assign a motor output force in Newtons *******  
-        //*************************************************************
- 
-            /*
-            // Init force 
-            double force = 0.5; // Force in newtons
-            double K = 125;   // spring stiffness
-            Tp = (rh*rp)/rs * force; // output torque
-            //Serial.println(Tp,5);
-            force = -K*xh;
-           
-            */
-
-         // This is just a simple example of a haptic wall that only uses encoder position.
-         // You will need to add the rest of the following cases. You will want to enable some way to select each case. 
-         // Options for this are #DEFINE statements, swtich case statements (i.e., like a key press in serial monitor), or 
-         // some other method. 
-          
-          // Virtual Wall 
-        //*************************************************************
-           
-           
-          /*
-           // IF position < x_wall
-          
-           if (xh > x_wall)
-           {
-              // THEN Force = - k_wall  x_wall
-              // Added min and maximum to prevent buzzing and slipping on cable
-              // Chose K_wall to be slightly less than K = 125 becasue K=125 is the maximum K value we found that preforms well
-              force = constrain(-K_wall*(xh-x_wall),-2.45, -1); 
-              
-              
-           }
-           
-           // ELSE
-           else
-           {
-             // THEN Force = 0
-             force = 0;
-           }
-           
-          */
-       
-         // Linear Damping 
-        //*************************************************************
-        
-        // Implement Linear Damping Equation
-        //force = -vh*B;
-        
-
-         // Nonlinear Friction
-        //*************************************************************
-        
-        //Serial.println(vh);
-        // IF velocity is small enough for static friction
-        
-        
-        // Find the force of hand from acceleration
-        double Fa = a * m;
-        if(abs(vh)<deltaV)
-        {
-          force = -sign(vh)*D;
-          
-        }
-        // ELSE implement vicous damping and dynamic friction
-        else
-        {
-          force = -C*sign(vh) - B*vh;
-        }
-        //Serial.println(abs(vh));
-
-         // A Hard Surface 
-        //*************************************************************
-        
-
-         // Bump and Valley  
-        //*************************************************************
+    break;
 
 
-          // Texture 
-        //*************************************************************
+  case 98:
+    // Bump and Valley (b)
+    //*************************************************************
+    Serial.print("Bump and Valley");
+    break;
 
-           // CHALLENGE POINTS: Try simulating a paddle ball! Hint you need to keep track of the virtual balls dynamics and 
-           // compute interaction forces relative to the changing ball position.  
-        //*************************************************************
-        
- 
 
+  case 116:
+    // Texture (t)
+    //*************************************************************
+    Serial.print("Texture");
+
+    break;
+      // CHALLENGE POINTS: Try simulating a paddle ball! Hint you need to keep track of the virtual balls dynamics and 
+      // compute interaction forces relative to the changing ball position.  
+  //*************************************************************
+
+  default:
+  Serial.println("No Mode");
+  
+
+  }
       //*************************************************************
       //*** Section 4. Force output (do not change) *****************
       //*************************************************************
-
+      Serial.println("Section 4");
         // Determine correct direction 
         //*************************************************************
         if(force < 0)
@@ -303,14 +333,18 @@ void loop()
         //*************************************************************    
         analogWrite(PWMspeed, (abs(Tp)/stall_Torque)*255); // This ensures we aren't writing 
 
-  
+    
   // Update variables 
   lastVel = vel;
   lastPos = pos; 
 
+  Serial.print("  V: ");
+  Serial.print( vh, 5);
+  Serial.println("  done");
 }
 
 // Function for returning the sign of a variable
+
 
 int sign(double value) {
   if (value > 0) {
@@ -320,5 +354,7 @@ int sign(double value) {
   } else {
     return 0;  // Zero
   }
+
+
 }
 
