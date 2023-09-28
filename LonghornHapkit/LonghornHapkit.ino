@@ -32,6 +32,7 @@ double lastLastXh = 0;
 double lastVh = 0;
 double lastLastVh = 0;
 
+
 // Kinematics variables
 double xh = 0;           // position of the handle [m]
 double vh = 0;
@@ -66,19 +67,74 @@ boolean timeoutOccured = false;
 
 // New Variables added by team
 
+double max_force = 2.45; // [N] based on cable slip
+
 // Virtual Wall Variables
 double x_wall = 0.005; // Value in meters
 double K_wall = 120; // Value in N*m
 
+
 // Linear Damping Variables
 double B = 0.85; // N*s/m, linear damping coefficient
+
 
 // Dyanmic Friction
 double C = 0.5; // N
 
+
 // Static Friction
 double D = 2; // N
-double deltaV = 0.5; // m/s
+double deltaV = 1; // m/s
+
+
+// Choose mode
+bool new_mode = true;
+char temp_input = 'w';
+char mode = 'b';
+// SET SERIAL INPUT SETTING TO NO LINE ENDING OR IT WILL NOT WORK
+// Wall : w
+// Linear Damping: l
+// Nonlinear Friction: n 
+// Hard Surface: h
+// Bump and Valley: b
+// Texture: t
+
+
+
+// Hard Surface
+bool still_touching = false;
+float force_delta = 0;
+float pi = 3.1415926;
+int oscilation_microsecond_start = 0; // [microseconds] used to track oscilation phase
+float v_start = 0; // init to random value
+float forceThreshold = 0.01; // N
+
+float oscilation_magnitude_scale = 1; // [Ns/m]
+float oscilation_decay_base = 1.01; // 
+float oscilation_frequency = 10; // [Hz]
+
+
+
+// Bump and Valley
+float bump_force_scale = 0.75;
+float bump_center = -0.3; // [m]
+float bump_width =0.1; // [m]
+float valley_force_scale = 0.75;
+float valley_center = 0.03; // [m]
+float valley_width =0.01; // [m]
+
+
+
+//Texture
+float texture_speed_threshold = 0.01; // [m/s]
+float sawtooth_magnitude = 0.2; // [N] Keep lower than stiction of mechanism
+int sawtooth_scale = 1000; // [s -> ms]
+int sawtooth_width = 10; // number of time units -> distance units per sawtooth
+
+
+
+
+
 
 
 
@@ -91,13 +147,13 @@ void setup()
   // Set Up Serial
   Serial.begin(115200);
 
- // Output Pins
- pinMode(PWMoutp, OUTPUT);
- pinMode(PWMoutn, OUTPUT);
- pinMode(PWMspeed, OUTPUT);
+  // Output Pins
+  pinMode(PWMoutp, OUTPUT);
+  pinMode(PWMoutn, OUTPUT);
+  pinMode(PWMspeed, OUTPUT);
 
- // Haptic Loop Timer Initalization
-   Timer1.initialize(); 
+  // Haptic Loop Timer Initalization
+  Timer1.initialize(); 
   long period = 1000; // [us]  10000 [us] - 100 Hz 
   Timer1.attachInterrupt(hapticLoop,period); 
 
@@ -110,7 +166,6 @@ void setup()
   digitalWrite(PWMoutp, HIGH);
   digitalWrite(PWMoutn, LOW);
   analogWrite(PWMspeed, 0);
-  
 }
 
 //--------------------------------------------------------------------------
@@ -128,155 +183,282 @@ void loop()
 // --------------------------
 // Haptic Loop
 // --------------------------
-  void hapticLoop()
+void hapticLoop()
+{
+  
+  // See if flag is out (couldn't finish before another call) 
+  if(hapticLoopFlagOut)
   {
+    timeoutOccured = true;
+  }
 
-      // See if flag is out (couldn't finish before another call) 
-      if(hapticLoopFlagOut)
-      {
-        timeoutOccured = true;
+  //*************************************************************
+  //*** Section 1. Compute position and velocity using encoder (DO NOT CHANGE!!) ***  
+  //*************************************************************
+  pos = encoder.read();
+  double vel = (.80)*lastVel + (.20)*(pos - lastPos)/(.01);
+
+
+  //*************************************************************
+  //*** Section 2. Compute handle position in meters ************
+  //*************************************************************
+  // ADD YOUR CODE HERE
+
+  // SOLUTION:
+  // Define kinematic parameters you may need
+  //int CPR = 48; // Counts per revolution
+
+
+  // Step 2.1: print updatedPos via serial monitor
+  //*************************************************************
+  // Need the count of number of rotations
+  double updatedPos = (pos)/encoderResolution;
+
+  // Step 2.2: Compute the angle of the sector pulley (ts) in degrees based on updatedPos
+  //*************************************************************
+  double ts = rp*updatedPos*360/(rs);
+  //double ts = -.0107*updatedPos + 4.9513; // NOTE - THESE NUMBERS MIGHT NOT BE CORRECT! USE KINEMATICS TO FIGRUE IT OUT!
+  // Step 2.3: Compute the position of the handle based on ts
+  //*************************************************************
+  xh = rh*(ts*3.14159/180);       // Again, these numbers may not be correct. You need to determine these relationships. 
+
+  // Step 2.4: print xh via serial monitor
+  //*************************************************************
+
+  // Serial.print(xh,3);
+     
+  // Step 2.5: compute handle velocity
+  //*************************************************************
+  vh = -(.95*.95)*lastLastVh + 2*.95*lastVh + (1-.95)*(1-.95)*(xh-lastXh)/.0001;  // filtered velocity (2nd-order filter)
+  lastXh = xh;
+  lastLastVh = lastVh;
+  lastVh = vh;
+        
+  //*************************************************************
+  //*** Section 3. Assign a motor output force in Newtons *******  
+  //*************************************************************
+  /*
+  // Init force 
+  double force = 0.5; // Force in newtons
+  double K = 125;   // spring stiffness
+  Tp = (rh*rp)/rs * force; // output torque
+  //Serial.println(Tp,5);
+  force = -K*xh;
+        
+  */
+
+  // This is just a simple example of a haptic wall that only uses encoder position.
+  // You will need to add the rest of the following cases. You will want to enable some way to select each case. 
+  // Options for this are #DEFINE statements, swtich case statements (i.e., like a key press in serial monitor), or 
+  // some other method. 
+    
+    // Select mode
+    if (Serial.available() > 0) {
+    // read the incoming byte:
+    char temp_input = Serial.read();    
+    mode = char(temp_input);
+    new_mode = true;
+    }
+    else{
+      new_mode = false;
+    }
+
+    // Switch between modes - occasionally reads 1 mode behind entered
+    switch (mode) {
+  case 'w':
+      // Virtual Wall (w)
+      //*************************************************************    
+      if(new_mode){
+        Serial.println("Wall");
       }
-      //*************************************************************
-      //*** Section 1. Compute position and velocity using encoder (DO NOT CHANGE!!) ***  
-      //*************************************************************
-      pos = encoder.read();
-      double vel = (.80)*lastVel + (.20)*(pos - lastPos)/(.01);
-      //Serial.println(pos);
-
-        //*************************************************************
-        //*** Section 2. Compute handle position in meters ************
-        //*************************************************************
+          
+      if (xh > x_wall) // IF position < x_wall
+      {
+        // Added min and maximum to prevent buzzing and slipping on cable
+        // Chose K_wall to be slightly less than K = 125 becasue K=125 is the maximum K value we found that preforms well
+        force = constrain(-K_wall*(xh-x_wall),-1*max_force, -1); // THEN Force = - k_wall  x_wall
+      }
+      else // ELSE
+      {
+        force = 0; // THEN Force = 0
+      }
+      break;
       
-          // ADD YOUR CODE HERE
+  case 'l':
+    // Linear Damping (l)
+    //*************************************************************
+    if(new_mode){
+        Serial.println("Linear Damping");
+      }
+    force = -vh*B; // Implement Linear Damping Equation
+    break;
 
-          // SOLUTION:
-          // Define kinematic parameters you may need
-          //int CPR = 48; // Counts per revolution
+  case 'n':
+    // Nonlinear Friction (n)
+    //*************************************************************
+    if(new_mode){
+        Serial.println("Nonlinear Friction");
+      }
+    
+    
+  // double Fa = a * m;
+    if(abs(vh)<deltaV) // IF velocity is small enough for static friction
+    {
+      force = -sign(vh)*D; // Find the force of hand from acceleration
+    }
+  
+    else // ELSE implement vicous damping and dynamic friction
+    {
+      force = -C*sign(vh) - B*vh;
+    }
+  
+    //Serial.println(abs(vh));
 
+    break;
 
-
-          // Step 2.1: print updatedPos via serial monitor
-          //*************************************************************
-          // Need the count of number of rotations
-          double updatedPos = (pos)/encoderResolution;
-          //Serial.println(updatedPos);
-           
-          // Step 2.2: Compute the angle of the sector pulley (ts) in degrees based on updatedPos
-         //*************************************************************
-          double ts = rp*updatedPos*360/(rs);
-          //double ts = -.0107*updatedPos + 4.9513; // NOTE - THESE NUMBERS MIGHT NOT BE CORRECT! USE KINEMATICS TO FIGRUE IT OUT!
-          //Serial.println(ts);
-         // Step 2.3: Compute the position of the handle based on ts
-          //*************************************************************
-
-          xh = rh*(ts*3.14159/180);       // Again, these numbers may not be correct. You need to determine these relationships. 
+    
+  case 'h':
+    // A Hard Surface (h)
+    //*************************************************************
+    if(new_mode){
+      Serial.println("Hard Surface");
+    }
+    
+    // If in the wall
+    if (xh > x_wall)
+    {
+      // IF first time in function
+      if (!still_touching)
+      {
+        still_touching = true;
+        v_start = vh;
+        oscilation_microsecond_start = micros();
         
-          // Step 2.4: print xh via serial monitor
-          //*************************************************************
-
-          //Serial.println(xh,5);
-           
-          // Step 2.5: compute handle velocity
-          //*************************************************************
-           vh = -(.95*.95)*lastLastVh + 2*.95*lastVh + (1-.95)*(1-.95)*(xh-lastXh)/.0001;  // filtered velocity (2nd-order filter)
-           lastXh = xh;
-           lastLastVh = lastVh;
-           lastVh = vh;
-           
-        //*************************************************************
-        //*** Section 3. Assign a motor output force in Newtons *******  
-        //*************************************************************
- 
-            /*
-            // Init force 
-            double force = 0.5; // Force in newtons
-            double K = 125;   // spring stiffness
-            Tp = (rh*rp)/rs * force; // output torque
-            //Serial.println(Tp,5);
-            force = -K*xh;
-           
-            */
-
-         // This is just a simple example of a haptic wall that only uses encoder position.
-         // You will need to add the rest of the following cases. You will want to enable some way to select each case. 
-         // Options for this are #DEFINE statements, swtich case statements (i.e., like a key press in serial monitor), or 
-         // some other method. 
-          
-          // Virtual Wall 
-        //*************************************************************
-           
-           
-          /*
-           // IF position < x_wall
-          
-           if (xh > x_wall)
-           {
-              // THEN Force = - k_wall  x_wall
-              // Added min and maximum to prevent buzzing and slipping on cable
-              // Chose K_wall to be slightly less than K = 125 becasue K=125 is the maximum K value we found that preforms well
-              force = constrain(-K_wall*(xh-x_wall),-2.45, -1); 
-              
-              
-           }
-           
-           // ELSE
-           else
-           {
-             // THEN Force = 0
-             force = 0;
-           }
-           
-          */
-       
-         // Linear Damping 
-        //*************************************************************
+        force_delta = oscilation_magnitude_scale * v_start*  // Initial Magnitude
+                      pow(oscilation_decay_base, -(micros()-oscilation_microsecond_start)*pow(10,-6))* // decay component
+                      sin(2*pi*oscilation_frequency*(micros()-oscilation_microsecond_start)*pow(10,-6)); // sinusoidal component
         
-        // Implement Linear Damping Equation
-        //force = -vh*B;
+        force = 0;
+        // Start 
+      }
+    }
+    // IF in sinusoid
+    if(still_touching)
+    {  
+      // IF less than threshold
+      if (micros()-oscilation_microsecond_start > 300000)
+      {
+        // end sinusoid
+        force_delta = 0;
+        // End in sinusoid
+        still_touching = false;
+        force = 0;
+      }
+      //Else
+      else
+      {
+        force_delta = oscilation_magnitude_scale * v_start*  // Initial Magnitude
+                      pow(oscilation_decay_base, -(micros()-oscilation_microsecond_start)*pow(10,-6))* // decay component
+                      sin(2*pi*oscilation_frequency*(micros()-oscilation_microsecond_start)*pow(10,-6)); // sinusoidal component
+        // Continue sinusoid
+        // Chose K_wall to be slightly less than K = 125 becasue K=125 is the maximum K value we found that preforms well
+        force = constrain(-K_wall*(xh-x_wall) + force_delta,-1*max_force, -1); // THEN Force = - k_wall  x_wall
         
+      }
+      //force = constrain(-K_wall*(xh-x_wall) + force_delta,-1*max_force, -1); // THEN Force = - k_wall  x_wall
+      Serial.println(force_delta);
+    }
+    
+    /*
+    if (xh > x_wall) // IF position < x_wall
+    {
+      
+      if (still_touching) // Check to see if continuing previous sinusoid
+      {
+        // Equation equivalent to:
+        // (OMS * Vh) * (ODB^(-(t-t0)) * sin(2*pi*OF*(t-t0)))
 
-         // Nonlinear Friction
-        //*************************************************************
-        
-        //Serial.println(vh);
-        // IF velocity is small enough for static friction
-        
-        
-        // Find the force of hand from acceleration
-        double Fa = a * m;
-        if(abs(vh)<deltaV)
-        {
-          force = -sign(vh)*D;
-          
-        }
-        // ELSE implement vicous damping and dynamic friction
-        else
-        {
-          force = -C*sign(vh) - B*vh;
-        }
-        //Serial.println(abs(vh));
+        force_delta = oscilation_magnitude_scale * v_start* * // Initial Magnitude
+                      pow(oscilation_decay_base, -(micros()-oscilation_microsecond_start)*pow(10,-6))* // decay component
+                      sin(2*pi*oscilation_frequency*(micros()-oscilation_microsecond_start)*pow(10,-6)); // sinusoidal component
+      }
+      else
+      {
+        still_touching = true;
+        oscilation_microsecond_start = micros();
+        force_delta = 0;
+        v_start = vh;
 
-         // A Hard Surface 
-        //*************************************************************
-        
+      }
 
-         // Bump and Valley  
-        //*************************************************************
+      // Added min and maximum to prevent buzzing and slipping on cable
+      // Chose K_wall to be slightly less than K = 125 becasue K=125 is the maximum K value we found that preforms well
+      force = constrain(-K_wall*(xh-x_wall) + force_delta,-1*max_force, -1); // THEN Force = - k_wall  x_wall
+    }
+    else // ELSE
+    {
+      force = 0; // For sinusoid, force starts at 0
+      still_touching = false;
+    }
+    */
+    break;
 
 
-          // Texture 
-        //*************************************************************
+  case 'b':
+    // Bump and Valley (b)
+    //*************************************************************
+    if(new_mode){
+        Serial.println("Bump and Valley");
+      }
 
-           // CHALLENGE POINTS: Try simulating a paddle ball! Hint you need to keep track of the virtual balls dynamics and 
-           // compute interaction forces relative to the changing ball position.  
-        //*************************************************************
-        
- 
+    // Render Bump
+    if(abs(bump_center - xh) < bump_width)
+    {
+      // May need to put a negative
+      force = -max_force * bump_force_scale * sin(pi* (bump_center - xh)/bump_width); // Sinusoidally varies force based on proximity to center of bump
+    }
+    
+    // Render Valley
+    if(abs(valley_center - xh) < valley_width)
+    {
+      // May need to remove negative
+      force = +1 * max_force * valley_force_scale * sin(pi* (valley_center - xh)/valley_width); // Sinusoidally varies force based on proximity to center of bump
+    }
+    break;
 
+
+  case 't':
+    // Texture (t)
+    //*************************************************************
+    if(new_mode){
+        Serial.println("Texture");
+    }
+    
+    if(abs(vh) > texture_speed_threshold)
+    {
+      force = sawtooth_magnitude * (int(vh*sawtooth_scale) % sawtooth_width) / sawtooth_width; // multiply velocity by factor with modulus to produce sawtooth effect based on speed
+    }
+  else
+  {
+    force = 0; // Set force to 0 when not moving along surface
+  }
+    break;
+      // CHALLENGE POINTS: Try simulating a paddle ball! Hint you need to keep track of the virtual balls dynamics and 
+      // compute interaction forces relative to the changing ball position.  
+  //*************************************************************
+
+  default:
+  if(new_mode){
+        Serial.println("No Mode. Options:\nw -> Wall\nl -> Linear Damping\nn -> Nonlinear Friction\nh -> Hard Surface\nb -> Bump and Valley\nt -> Texture\n[CASE SENSITIVE, SELECT NO LINE ENDING]");
+
+      }
+  
+
+  }
       //*************************************************************
       //*** Section 4. Force output (do not change) *****************
       //*************************************************************
-
+      // Serial.println("Section 4");
         // Determine correct direction 
         //*************************************************************
         if(force < 0)
@@ -303,7 +485,7 @@ void loop()
         //*************************************************************    
         analogWrite(PWMspeed, (abs(Tp)/stall_Torque)*255); // This ensures we aren't writing 
 
-  
+    
   // Update variables 
   lastVel = vel;
   lastPos = pos; 
@@ -311,6 +493,7 @@ void loop()
 }
 
 // Function for returning the sign of a variable
+
 
 int sign(double value) {
   if (value > 0) {
@@ -320,5 +503,7 @@ int sign(double value) {
   } else {
     return 0;  // Zero
   }
+
+
 }
 
