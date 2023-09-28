@@ -349,7 +349,7 @@ void hapticLoop()
       {
   
         force = -oscilation_magnitude_scale * max_force * abs(v_start) * 
-                pow(oscilation_decay_base,log(0.01) * deltaT / end_time) * 
+                pow(oscilation_decay_base,log(0.027) * deltaT / end_time) * 
                 sin(2 * PI* oscilation_frequency * deltaT * pow(10,-6));
         //Serial.println(force);
         
