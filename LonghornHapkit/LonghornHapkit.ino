@@ -90,7 +90,7 @@ double deltaV = 1; // m/s
 // Choose mode
 bool new_mode = true;
 char temp_input = 'w';
-char mode = 'b';
+char mode = 'h';
 // SET SERIAL INPUT SETTING TO NO LINE ENDING OR IT WILL NOT WORK
 // Wall : w
 // Linear Damping: l
@@ -105,13 +105,14 @@ char mode = 'b';
 bool still_touching = false;
 float force_delta = 0;
 float pi = 3.1415926;
-int oscilation_microsecond_start = 0; // [microseconds] used to track oscilation phase
+unsigned long oscilation_microsecond_start = 0; // [microseconds] used to track oscilation phase
 float v_start = 0; // init to random value
 float forceThreshold = 0.01; // N
 
-float oscilation_magnitude_scale = 1; // [Ns/m]
-float oscilation_decay_base = 1.01; // 
-float oscilation_frequency = 10; // [Hz]
+float oscilation_magnitude_scale = 0.3; // [Ns/m]
+float oscilation_decay_base = 2.7182818; // e
+float oscilation_frequency = 9; // [Hz]
+float end_time = 2000000; // microseconds
 
 
 
@@ -217,11 +218,12 @@ void hapticLoop()
   // Step 2.2: Compute the angle of the sector pulley (ts) in degrees based on updatedPos
   //*************************************************************
   double ts = rp*updatedPos*360/(rs);
+  
   //double ts = -.0107*updatedPos + 4.9513; // NOTE - THESE NUMBERS MIGHT NOT BE CORRECT! USE KINEMATICS TO FIGRUE IT OUT!
   // Step 2.3: Compute the position of the handle based on ts
   //*************************************************************
   xh = rh*(ts*3.14159/180);       // Again, these numbers may not be correct. You need to determine these relationships. 
-
+  
   // Step 2.4: print xh via serial monitor
   //*************************************************************
 
@@ -324,83 +326,53 @@ void hapticLoop()
       Serial.println("Hard Surface");
     }
     
-    // If in the wall
-    if (xh > x_wall)
-    {
-      // IF first time in function
-      if (!still_touching)
-      {
-        still_touching = true;
-        v_start = vh;
-        oscilation_microsecond_start = micros();
-        
-        force_delta = oscilation_magnitude_scale * v_start*  // Initial Magnitude
-                      pow(oscilation_decay_base, -(micros()-oscilation_microsecond_start)*pow(10,-6))* // decay component
-                      sin(2*pi*oscilation_frequency*(micros()-oscilation_microsecond_start)*pow(10,-6)); // sinusoidal component
-        
-        force = 0;
-        // Start 
-      }
-    }
+    //Serial.println(xh);
     // IF in sinusoid
     if(still_touching)
     {  
+      
       // IF less than threshold
-      if (micros()-oscilation_microsecond_start > 300000)
+      unsigned long currTime = micros();
+      long deltaT = currTime-oscilation_microsecond_start;
+      //Serial.println(deltaT);
+      //Serial.println(deltaT-end_time);
+      if (deltaT > end_time)
       {
-        // end sinusoid
-        force_delta = 0;
+        //Serial.println("Got Here");
         // End in sinusoid
         still_touching = false;
+        
         force = 0;
       }
       //Else
       else
       {
-        force_delta = oscilation_magnitude_scale * v_start*  // Initial Magnitude
-                      pow(oscilation_decay_base, -(micros()-oscilation_microsecond_start)*pow(10,-6))* // decay component
-                      sin(2*pi*oscilation_frequency*(micros()-oscilation_microsecond_start)*pow(10,-6)); // sinusoidal component
-        // Continue sinusoid
-        // Chose K_wall to be slightly less than K = 125 becasue K=125 is the maximum K value we found that preforms well
-        force = constrain(-K_wall*(xh-x_wall) + force_delta,-1*max_force, -1); // THEN Force = - k_wall  x_wall
+  
+        force = -oscilation_magnitude_scale * max_force * abs(v_start) * 
+                pow(oscilation_decay_base,log(0.01) * deltaT / end_time) * 
+                sin(2 * PI* oscilation_frequency * deltaT * pow(10,-6));
+        //Serial.println(force);
         
       }
-      //force = constrain(-K_wall*(xh-x_wall) + force_delta,-1*max_force, -1); // THEN Force = - k_wall  x_wall
-      Serial.println(force_delta);
-    }
-    
-    /*
-    if (xh > x_wall) // IF position < x_wall
-    {
-      
-      if (still_touching) // Check to see if continuing previous sinusoid
-      {
-        // Equation equivalent to:
-        // (OMS * Vh) * (ODB^(-(t-t0)) * sin(2*pi*OF*(t-t0)))
 
-        force_delta = oscilation_magnitude_scale * v_start* * // Initial Magnitude
-                      pow(oscilation_decay_base, -(micros()-oscilation_microsecond_start)*pow(10,-6))* // decay component
-                      sin(2*pi*oscilation_frequency*(micros()-oscilation_microsecond_start)*pow(10,-6)); // sinusoidal component
-      }
-      else
-      {
+      
+
+    }
+    //Serial.println(xh);
+    // If in the wall
+    if (xh > x_wall)
+    {
+      if(!still_touching){
+        v_start = vh;
         still_touching = true;
         oscilation_microsecond_start = micros();
-        force_delta = 0;
-        v_start = vh;
-
+        force = 0;
       }
+      
+      // Apply Wall force, only use half of max force
+      force = force + constrain( -0.75*K_wall*(xh-x_wall),-0.5*max_force, -1);
+    }
 
-      // Added min and maximum to prevent buzzing and slipping on cable
-      // Chose K_wall to be slightly less than K = 125 becasue K=125 is the maximum K value we found that preforms well
-      force = constrain(-K_wall*(xh-x_wall) + force_delta,-1*max_force, -1); // THEN Force = - k_wall  x_wall
-    }
-    else // ELSE
-    {
-      force = 0; // For sinusoid, force starts at 0
-      still_touching = false;
-    }
-    */
     break;
 
 
