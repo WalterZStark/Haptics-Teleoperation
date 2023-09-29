@@ -76,15 +76,18 @@ double K_wall = 120;    // Value in N*m
 
 // Linear Damping Variables
 double B = 0.85;  // N*s/m, linear damping coefficient
-
+double B_nl = 0.6; // N*s/m
 
 // Dyanmic Friction
 double C = 0.01;  // N
-double v_threshold = 0.7;
+double v_threshold = 0.6;
 // Static Friction
-double D = 1.2;         // N
+double D = max_force;         // N
 double deltaV = 1;  // m/s
 
+// Source of damping and stiffness value of hand
+float B_h = 3.1; // Damping coefficient of hand, was 3.25
+float K_h = 400; // Stiffness of hand
 
 
 
@@ -301,12 +304,17 @@ void hapticLoop() {
       // double Fa = a * m;
       if (abs(vh) > v_threshold) {
         // Kinetic friction
-        force = -C * sign(vh) - B * vh;
+        force = -C * sign(vh) - B_nl * vh;
         
       }
-      else if (abs(vh) > abs(lastVel)+0.04)  // IF velocity is small enough for static friction
+      else if (abs(vh) < v_threshold && abs(vh) > 0.35)  // IF velocity is small enough for static friction
       {
-        force = -sign(vh) * D;  // Static Friction
+        
+        // Calculate applied force
+        float Fa = B_h*vh; // can't use stifness in this case since this is instaneous
+        // Calculate static friction
+        force = -sign(vh) * min(abs(Fa),D);  // Static Friction
+        Serial.println(vh);
       }
 
       else  // ELSE implement vicous damping and dynamic friction
