@@ -5,6 +5,9 @@
 // Code to test basic functionaility of the Longhorn Hapkit (w/ encoder)
 //--------------------------------------------------------------------------
 
+// Additional functionality added by Jacob Yan, Walter Stark, and Eloy Mier
+
+
 // INCLUDES
 #define ENCODER_OPTIMIZE_INTERRUPTS
 #include <TimerOne.h>  // This library manages the timing of the haptic loop
@@ -94,9 +97,9 @@ float K_h = 400; // Stiffness of hand
 
 
 // Hard Surface
-bool still_touching = false;
-float force_delta = 0;
-float pi = 3.1415926;
+bool still_touching = false; // Bool to check if use is still touching wall
+float force_delta = 0; // Measuring how much the force changes every iteration
+float pi = 3.1415926; // Variable for PI, found later there is a default in Arduino
 unsigned long oscilation_microsecond_start = 0;  // [microseconds] used to track oscilation phase
 float v_start = 0;                               // init to random value
 float forceThreshold = 0.01;                     // N
@@ -109,10 +112,10 @@ float end_time = 2000000;                 // microseconds
 
 
 // Bump and Valley
-float bump_force_scale = 0.75;
+float bump_force_scale = 0.75; // Scale value, no units
 float bump_center = -0.03;  // [m]
 float bump_width = 0.01;    // [m]
-float valley_force_scale = 0.75;
+float valley_force_scale = 0.75; // Scale value, no units
 float valley_center = 0.03;  // [m]
 float valley_width = 0.01;   // [m]
 
@@ -121,16 +124,17 @@ float valley_width = 0.01;   // [m]
 //Texture
 float texture_speed_threshold = 0.2;  // [m/s]
 float sawtooth_magnitude = 1.4;        // [N] Keep lower than stiction of mechanism
-
 int sawtooth_width = 10;               // number of enc counts / tooth -> -72 to 70 enc counts
 
 
 
 
 // Choose mode
-bool new_mode = true;
-char temp_input = 'w';
-char mode = 'w';
+bool new_mode = true; // check if a new mode is being input
+char temp_input = 'w'; // starting mode as wall
+char mode = 'w'; // setting the mode as the same as the temp_input
+
+
 // SET SERIAL INPUT SETTING TO NO LINE ENDING OR IT WILL NOT WORK
 // Wall : w
 // Linear Damping: l
@@ -208,27 +212,29 @@ void hapticLoop() {
 
   // SOLUTION:
   // Define kinematic parameters you may need
-  //int CPR = 48; // Counts per revolution
+  
+  // Kinematic parameters added to the beginning of the code for better readability
 
 
   // Step 2.1: print updatedPos via serial monitor
   //*************************************************************
-  // Need the count of number of rotations
+  // Fidning rotations based on encoder ticks
   double updatedPos = (pos) / encoderResolution;
 
   // Step 2.2: Compute the angle of the sector pulley (ts) in degrees based on updatedPos
   //*************************************************************
+  // Angle of sector pulley in degrees
   double ts = rp * updatedPos * 360 / (rs);
 
   //double ts = -.0107*updatedPos + 4.9513; // NOTE - THESE NUMBERS MIGHT NOT BE CORRECT! USE KINEMATICS TO FIGRUE IT OUT!
   // Step 2.3: Compute the position of the handle based on ts
   //*************************************************************
-  xh = rh * (ts * 3.14159 / 180);  // Again, these numbers may not be correct. You need to determine these relationships.
+  xh = rh * (ts * 3.14159 / 180);  // Position of handle
 
   // Step 2.4: print xh via serial monitor
   //*************************************************************
 
-  // Serial.print(xh,3);
+  // Serial.print(xh,3); // Commented out to not fill the serial monitor
 
   // Step 2.5: compute handle velocity
   //*************************************************************
@@ -240,12 +246,13 @@ void hapticLoop() {
   //*************************************************************
   //*** Section 3. Assign a motor output force in Newtons *******
   //*************************************************************
+  
+  // The code below was commented out so that other haptic feedback could be used
   /*
   // Init force 
   double force = 0.5; // Force in newtons
   double K = 125;   // spring stiffness
   Tp = (rh*rp)/rs * force; // output torque
-  //Serial.println(Tp,5);
   force = -K*xh;
         
   */
@@ -255,12 +262,15 @@ void hapticLoop() {
   // Options for this are #DEFINE statements, swtich case statements (i.e., like a key press in serial monitor), or
   // some other method.
 
-  // Select mode
+  // Check for a serial input
   if (Serial.available() > 0) {
     // read the incoming byte:
     char temp_input = Serial.read();
+    // Update mode
     mode = char(temp_input);
+    // Update that a new mode was selected
     new_mode = true;
+  // Determine there isn't a serial input
   } else {
     new_mode = false;
   }
@@ -270,7 +280,9 @@ void hapticLoop() {
     case 'w':
       // Virtual Wall (w)
       //*************************************************************
+      // Check if this case was just called
       if (new_mode) {
+        // Print that a wall was selected
         Serial.println("Wall");
       }
 
@@ -288,6 +300,7 @@ void hapticLoop() {
     case 'l':
       // Linear Damping (l)
       //*************************************************************
+      // Check if this case was just called
       if (new_mode) {
         Serial.println("Linear Damping");
       }
@@ -297,32 +310,34 @@ void hapticLoop() {
     case 'n':
       // Nonlinear Friction (n)
       //*************************************************************
+      // Check if this case was just called
       if (new_mode) {
         Serial.println("Nonlinear Friction");
       }
 
-      // double Fa = a * m;
+      // Check if the velocity is large enough for kinetic friction
       if (abs(vh) > v_threshold) {
         // Kinetic friction
         force = -C * sign(vh) - B_nl * vh;
         
       }
-      else if (abs(vh) < v_threshold && abs(vh) > 0.35)  // IF velocity is small enough for static friction
+      // check if velocity is small enough for static friction, but large enough to prevent instability
+      else if (abs(vh) < v_threshold && abs(vh) > 0.35)  
       {
         
         // Calculate applied force
         float Fa = B_h*vh; // can't use stifness in this case since this is instaneous
         // Calculate static friction
         force = -sign(vh) * min(abs(Fa),D);  // Static Friction
-        Serial.println(vh);
+        
       }
 
-      else  // ELSE implement vicous damping and dynamic friction
+      else  // ELSE if only a low to no velocity is applied to the handle
       {
         force = 0; // No force when not acted on
       }
 
-      //Serial.println(abs(vh));
+      
 
       break;
 
@@ -330,39 +345,40 @@ void hapticLoop() {
     case 'h':
       // A Hard Surface (h)
       //*************************************************************
+      // Check if this case was just called
       if (new_mode) {
         Serial.println("Hard Surface");
       }
 
-      //Serial.println(xh);
+      
       // IF in sinusoid
       if (still_touching) {
 
-        // IF less than threshold
+        // Find the current time
         unsigned long currTime = micros();
         long deltaT = currTime - oscilation_microsecond_start;
-        //Serial.println(deltaT);
-        //Serial.println(deltaT-end_time);
+        // IF less than threshold
         if (deltaT > end_time) {
-          //Serial.println("Got Here");
-          // End in sinusoid
+          
+          // Check if the person is still in the wall
           still_touching = false;
 
           force = 0;
         }
         //Else
         else {
-
+          // Compute the force required such that it decays over time
           force = -oscilation_magnitude_scale * max_force * abs(v_start) * pow(oscilation_decay_base, log(0.027) * deltaT / end_time) * sin(2 * PI * oscilation_frequency * deltaT * pow(10, -6));
-          //Serial.println(force);
         }
       }
-      //Serial.println(xh);
-      // If in the wall
+      
+      // Check if in the wall
       if (xh > x_wall) {
+        // Check if been in wall before
         if (!still_touching) {
           v_start = vh;
           still_touching = true;
+          // Start time
           oscilation_microsecond_start = micros();
           force = 0;
         }
@@ -377,19 +393,20 @@ void hapticLoop() {
     case 'b':
       // Bump and Valley (b)
       //*************************************************************
+      // Check if this case was just called
       if (new_mode) {
         Serial.println("Bump and Valley");
       }
 
       // Render Bump
       if (abs(bump_center - xh) < bump_width) {
-        // May need to put a negative
+        // Calculate force of bump
         force = -max_force * bump_force_scale * sin(pi * (bump_center - xh) / bump_width);  // Sinusoidally varies force based on proximity to center of bump
       }
 
       // Render Valley
       if (abs(valley_center - xh) < valley_width) {
-        // May need to remove negative
+        // Calculate force of valley
         force = +1 * max_force * valley_force_scale * sin(pi * (valley_center - xh) / valley_width);  // Sinusoidally varies force based on proximity to center of bump
       }
       break;
@@ -398,12 +415,13 @@ void hapticLoop() {
     case 't':
       // Texture (t)
       //*************************************************************
+      // Check if this case was just called
       if (new_mode) {
         Serial.println("Texture");
       }
 
-      Serial.println(vh);
-
+      
+      // Check if velocity is greater than the texture threshold
       if (abs(vh) > texture_speed_threshold) {
         force = float(-sign(vh) * sawtooth_magnitude * (int(abs(pos)) % sawtooth_width) / sawtooth_width);  // multiply velocity by factor with modulus to produce sawtooth effect based on speed
 
@@ -416,7 +434,9 @@ void hapticLoop() {
       //*************************************************************
 
     default:
+      // Check if its a new mode and no listed modes were selected
       if (new_mode) {
+        // Turn off motor of no modes are being used
         force = 0;
         Serial.println("No Mode. Options:\nw -> Wall\nl -> Linear Damping\nn -> Nonlinear Friction\nh -> Hard Surface\nb -> Bump and Valley\nt -> Texture\n[CASE SENSITIVE, SELECT NO LINE ENDING]");
       }
