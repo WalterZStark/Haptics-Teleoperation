@@ -1,471 +1,599 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01-mydevice", "examples\GLFW\01-mydevice\01-mydevice-VS2015.vcxproj", "{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "02-multi-devices", "examples\GLFW\02-multi-devices\02-multi-devices-VS2015.vcxproj", "{D133A1BF-E97C-4495-8FD5-556CA25179D8}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03-analytics", "examples\GLFW\03-analytics\03-analytics-VS2015.vcxproj", "{B8D2231B-D7A5-4D68-8648-5F9C533E2165}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04-shapes", "examples\GLFW\04-shapes\04-shapes-VS2015.vcxproj", "{D46DD4BB-5A59-4887-AEAD-3C8775A0224F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05-fonts", "examples\GLFW\05-fonts\05-fonts-VS2015.vcxproj", "{490AA03D-FE72-4F84-A86D-2D246AAAAEE6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "06-images", "examples\GLFW\06-images\06-images-VS2015.vcxproj", "{7BD3B0B5-702A-41F1-B80B-36154265E54F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "07-mouse-select", "examples\GLFW\07-mouse-select\07-mouse-select-VS2015.vcxproj", "{80D39AAC-D04B-4690-BC88-036BF0D9A079}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "09-magnets", "examples\GLFW\09-magnets\09-magnets-VS2015.vcxproj", "{3B55A84D-0EAB-41FD-A654-7951CB219C3C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "08-shaders", "examples\GLFW\08-shaders\08-shaders-VS2015.vcxproj", "{FA374001-442E-4E89-9E46-83CCE70A3064}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10-oring", "examples\GLFW\10-oring\10-oring-VS2015.vcxproj", "{F90795AF-895B-4458-A081-6124F2D9E9AE}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "11-effects", "examples\GLFW\11-effects\11-effects-VS2015.vcxproj", "{BA2987B6-E93E-4FB5-B4E5-67A8C41F6315}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "12-polygons", "examples\GLFW\12-polygons\12-polygons-VS2015.vcxproj", "{28CE1125-B8B2-4FC9-B8B5-01837E30E9A6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "13-primitives", "examples\GLFW\13-primitives\13-primitives-VS2015.vcxproj", "{A0FE2B56-6C50-4A6D-8FAA-CE094583CACD}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "14-textures", "examples\GLFW\14-textures\14-textures-VS2015.vcxproj", "{54925E60-29DC-4781-9AF4-F8C18FCF3B50}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "15-paint", "examples\GLFW\15-paint\15-paint-VS2015.vcxproj", "{A5ABC2B6-0159-4506-B04A-7EE0B22BBCA0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "16-friction", "examples\GLFW\16-friction\16-friction-VS2015.vcxproj", "{2F7A5DBA-0391-4235-9D23-982454349B55}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "17-shading", "examples\GLFW\17-shading\17-shading-VS2015.vcxproj", "{23D2C17D-68EB-4C91-8838-DDD787AD213B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "18-endoscope", "examples\GLFW\18-endoscope\18-endoscope-VS2015.vcxproj", "{9B3C3FDC-140F-4B03-A9FD-3ADCD9E111BD}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "19-space", "examples\GLFW\19-space\19-space-VS2015.vcxproj", "{0E07C8EB-3063-4606-A51A-525C7C24D63D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "20-map", "examples\GLFW\20-map\20-map-VS2015.vcxproj", "{4DB1C224-FB7B-4AA2-8E59-2252CBBA6EE2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "21-object", "examples\GLFW\21-object\21-object-VS2015.vcxproj", "{093BD170-68C0-488A-890F-F3BB3B9A7FD1}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "22-chrome", "examples\GLFW\22-chrome\22-chrome-VS2015.vcxproj", "{1325973E-9E7F-40AE-A49A-FEED4BF98F37}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "23-tooth", "examples\GLFW\23-tooth\23-tooth-VS2015.vcxproj", "{B1112A85-D22C-4ABD-ACDB-BD1A2E78E521}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "24-turntable", "examples\GLFW\24-turntable\24-turntable-VS2015.vcxproj", "{666CE3DF-B4DB-4BC1-AD2E-10B74401E82C}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "25-sounds", "examples\GLFW\25-sounds\25-sounds-VS2015.vcxproj", "{BBFD16DD-5EC0-4ADC-8CA6-47725719F2F2}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "26-video", "examples\GLFW\26-video\26-video-VS2015.vcxproj", "{DAF78A01-21D4-4B88-84D6-808CE1B8D97E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "27-multiframes", "examples\GLFW\27-multiframes\27-multiframes-VS2015.vcxproj", "{41047738-C5C7-4821-9E34-E3DCA990E716}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "28-voxel-basic", "examples\GLFW\28-voxel-basic\28-voxel-basic-VS2015.vcxproj", "{C22AB767-6673-4A9D-962E-A47C3D88D57E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "29-voxel-isosurface", "examples\GLFW\29-voxel-isosurface\29-voxel-isosurface-VS2015.vcxproj", "{5C203F0F-570E-4A65-9429-0C5F86DFE918}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "30-voxel-colormap", "examples\GLFW\30-voxel-colormap\30-voxel-colormap-VS2015.vcxproj", "{8FC75365-6554-44E0-A7BB-F4DE3F5F8568}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "31-pointcloud", "examples\GLFW\31-pointcloud\31-pointcloud-VS2015.vcxproj", "{E863DBE2-0795-47B1-9DBB-E1E5F996C517}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CHAI3D", "CHAI3D-VS2015.vcxproj", "{A9F01342-5463-4634-B1F9-BF98CD5591B0}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw", "extras\GLFW\glfw-VS2015.vcxproj", "{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Win32 = Debug|Win32
-		Debug|x64 = Debug|x64
-		Release|Win32 = Release|Win32
-		Release|x64 = Release|x64
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Debug|Win32.ActiveCfg = Debug|Win32
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Debug|Win32.Build.0 = Debug|Win32
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Debug|x64.ActiveCfg = Debug|x64
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Debug|x64.Build.0 = Debug|x64
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Release|Win32.ActiveCfg = Release|Win32
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Release|Win32.Build.0 = Release|Win32
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Release|x64.ActiveCfg = Release|x64
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Release|x64.Build.0 = Release|x64
-		{D133A1BF-E97C-4495-8FD5-556CA25179D8}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D133A1BF-E97C-4495-8FD5-556CA25179D8}.Debug|Win32.Build.0 = Debug|Win32
-		{D133A1BF-E97C-4495-8FD5-556CA25179D8}.Debug|x64.ActiveCfg = Debug|x64
-		{D133A1BF-E97C-4495-8FD5-556CA25179D8}.Debug|x64.Build.0 = Debug|x64
-		{D133A1BF-E97C-4495-8FD5-556CA25179D8}.Release|Win32.ActiveCfg = Release|Win32
-		{D133A1BF-E97C-4495-8FD5-556CA25179D8}.Release|Win32.Build.0 = Release|Win32
-		{D133A1BF-E97C-4495-8FD5-556CA25179D8}.Release|x64.ActiveCfg = Release|x64
-		{D133A1BF-E97C-4495-8FD5-556CA25179D8}.Release|x64.Build.0 = Release|x64
-		{B8D2231B-D7A5-4D68-8648-5F9C533E2165}.Debug|Win32.ActiveCfg = Debug|Win32
-		{B8D2231B-D7A5-4D68-8648-5F9C533E2165}.Debug|Win32.Build.0 = Debug|Win32
-		{B8D2231B-D7A5-4D68-8648-5F9C533E2165}.Debug|x64.ActiveCfg = Debug|x64
-		{B8D2231B-D7A5-4D68-8648-5F9C533E2165}.Debug|x64.Build.0 = Debug|x64
-		{B8D2231B-D7A5-4D68-8648-5F9C533E2165}.Release|Win32.ActiveCfg = Release|Win32
-		{B8D2231B-D7A5-4D68-8648-5F9C533E2165}.Release|Win32.Build.0 = Release|Win32
-		{B8D2231B-D7A5-4D68-8648-5F9C533E2165}.Release|x64.ActiveCfg = Release|x64
-		{B8D2231B-D7A5-4D68-8648-5F9C533E2165}.Release|x64.Build.0 = Release|x64
-		{D46DD4BB-5A59-4887-AEAD-3C8775A0224F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D46DD4BB-5A59-4887-AEAD-3C8775A0224F}.Debug|Win32.Build.0 = Debug|Win32
-		{D46DD4BB-5A59-4887-AEAD-3C8775A0224F}.Debug|x64.ActiveCfg = Debug|x64
-		{D46DD4BB-5A59-4887-AEAD-3C8775A0224F}.Debug|x64.Build.0 = Debug|x64
-		{D46DD4BB-5A59-4887-AEAD-3C8775A0224F}.Release|Win32.ActiveCfg = Release|Win32
-		{D46DD4BB-5A59-4887-AEAD-3C8775A0224F}.Release|Win32.Build.0 = Release|Win32
-		{D46DD4BB-5A59-4887-AEAD-3C8775A0224F}.Release|x64.ActiveCfg = Release|x64
-		{D46DD4BB-5A59-4887-AEAD-3C8775A0224F}.Release|x64.Build.0 = Release|x64
-		{490AA03D-FE72-4F84-A86D-2D246AAAAEE6}.Debug|Win32.ActiveCfg = Debug|Win32
-		{490AA03D-FE72-4F84-A86D-2D246AAAAEE6}.Debug|Win32.Build.0 = Debug|Win32
-		{490AA03D-FE72-4F84-A86D-2D246AAAAEE6}.Debug|x64.ActiveCfg = Debug|x64
-		{490AA03D-FE72-4F84-A86D-2D246AAAAEE6}.Debug|x64.Build.0 = Debug|x64
-		{490AA03D-FE72-4F84-A86D-2D246AAAAEE6}.Release|Win32.ActiveCfg = Release|Win32
-		{490AA03D-FE72-4F84-A86D-2D246AAAAEE6}.Release|Win32.Build.0 = Release|Win32
-		{490AA03D-FE72-4F84-A86D-2D246AAAAEE6}.Release|x64.ActiveCfg = Release|x64
-		{490AA03D-FE72-4F84-A86D-2D246AAAAEE6}.Release|x64.Build.0 = Release|x64
-		{7BD3B0B5-702A-41F1-B80B-36154265E54F}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7BD3B0B5-702A-41F1-B80B-36154265E54F}.Debug|Win32.Build.0 = Debug|Win32
-		{7BD3B0B5-702A-41F1-B80B-36154265E54F}.Debug|x64.ActiveCfg = Debug|x64
-		{7BD3B0B5-702A-41F1-B80B-36154265E54F}.Debug|x64.Build.0 = Debug|x64
-		{7BD3B0B5-702A-41F1-B80B-36154265E54F}.Release|Win32.ActiveCfg = Release|Win32
-		{7BD3B0B5-702A-41F1-B80B-36154265E54F}.Release|Win32.Build.0 = Release|Win32
-		{7BD3B0B5-702A-41F1-B80B-36154265E54F}.Release|x64.ActiveCfg = Release|x64
-		{7BD3B0B5-702A-41F1-B80B-36154265E54F}.Release|x64.Build.0 = Release|x64
-		{80D39AAC-D04B-4690-BC88-036BF0D9A079}.Debug|Win32.ActiveCfg = Debug|Win32
-		{80D39AAC-D04B-4690-BC88-036BF0D9A079}.Debug|Win32.Build.0 = Debug|Win32
-		{80D39AAC-D04B-4690-BC88-036BF0D9A079}.Debug|x64.ActiveCfg = Debug|x64
-		{80D39AAC-D04B-4690-BC88-036BF0D9A079}.Debug|x64.Build.0 = Debug|x64
-		{80D39AAC-D04B-4690-BC88-036BF0D9A079}.Release|Win32.ActiveCfg = Release|Win32
-		{80D39AAC-D04B-4690-BC88-036BF0D9A079}.Release|Win32.Build.0 = Release|Win32
-		{80D39AAC-D04B-4690-BC88-036BF0D9A079}.Release|x64.ActiveCfg = Release|x64
-		{80D39AAC-D04B-4690-BC88-036BF0D9A079}.Release|x64.Build.0 = Release|x64
-		{3B55A84D-0EAB-41FD-A654-7951CB219C3C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{3B55A84D-0EAB-41FD-A654-7951CB219C3C}.Debug|Win32.Build.0 = Debug|Win32
-		{3B55A84D-0EAB-41FD-A654-7951CB219C3C}.Debug|x64.ActiveCfg = Debug|x64
-		{3B55A84D-0EAB-41FD-A654-7951CB219C3C}.Debug|x64.Build.0 = Debug|x64
-		{3B55A84D-0EAB-41FD-A654-7951CB219C3C}.Release|Win32.ActiveCfg = Release|Win32
-		{3B55A84D-0EAB-41FD-A654-7951CB219C3C}.Release|Win32.Build.0 = Release|Win32
-		{3B55A84D-0EAB-41FD-A654-7951CB219C3C}.Release|x64.ActiveCfg = Release|x64
-		{3B55A84D-0EAB-41FD-A654-7951CB219C3C}.Release|x64.Build.0 = Release|x64
-		{FA374001-442E-4E89-9E46-83CCE70A3064}.Debug|Win32.ActiveCfg = Debug|Win32
-		{FA374001-442E-4E89-9E46-83CCE70A3064}.Debug|Win32.Build.0 = Debug|Win32
-		{FA374001-442E-4E89-9E46-83CCE70A3064}.Debug|x64.ActiveCfg = Debug|x64
-		{FA374001-442E-4E89-9E46-83CCE70A3064}.Debug|x64.Build.0 = Debug|x64
-		{FA374001-442E-4E89-9E46-83CCE70A3064}.Release|Win32.ActiveCfg = Release|Win32
-		{FA374001-442E-4E89-9E46-83CCE70A3064}.Release|Win32.Build.0 = Release|Win32
-		{FA374001-442E-4E89-9E46-83CCE70A3064}.Release|x64.ActiveCfg = Release|x64
-		{FA374001-442E-4E89-9E46-83CCE70A3064}.Release|x64.Build.0 = Release|x64
-		{F90795AF-895B-4458-A081-6124F2D9E9AE}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F90795AF-895B-4458-A081-6124F2D9E9AE}.Debug|Win32.Build.0 = Debug|Win32
-		{F90795AF-895B-4458-A081-6124F2D9E9AE}.Debug|x64.ActiveCfg = Debug|x64
-		{F90795AF-895B-4458-A081-6124F2D9E9AE}.Debug|x64.Build.0 = Debug|x64
-		{F90795AF-895B-4458-A081-6124F2D9E9AE}.Release|Win32.ActiveCfg = Release|Win32
-		{F90795AF-895B-4458-A081-6124F2D9E9AE}.Release|Win32.Build.0 = Release|Win32
-		{F90795AF-895B-4458-A081-6124F2D9E9AE}.Release|x64.ActiveCfg = Release|x64
-		{F90795AF-895B-4458-A081-6124F2D9E9AE}.Release|x64.Build.0 = Release|x64
-		{BA2987B6-E93E-4FB5-B4E5-67A8C41F6315}.Debug|Win32.ActiveCfg = Debug|Win32
-		{BA2987B6-E93E-4FB5-B4E5-67A8C41F6315}.Debug|Win32.Build.0 = Debug|Win32
-		{BA2987B6-E93E-4FB5-B4E5-67A8C41F6315}.Debug|x64.ActiveCfg = Debug|x64
-		{BA2987B6-E93E-4FB5-B4E5-67A8C41F6315}.Debug|x64.Build.0 = Debug|x64
-		{BA2987B6-E93E-4FB5-B4E5-67A8C41F6315}.Release|Win32.ActiveCfg = Release|Win32
-		{BA2987B6-E93E-4FB5-B4E5-67A8C41F6315}.Release|Win32.Build.0 = Release|Win32
-		{BA2987B6-E93E-4FB5-B4E5-67A8C41F6315}.Release|x64.ActiveCfg = Release|x64
-		{BA2987B6-E93E-4FB5-B4E5-67A8C41F6315}.Release|x64.Build.0 = Release|x64
-		{28CE1125-B8B2-4FC9-B8B5-01837E30E9A6}.Debug|Win32.ActiveCfg = Debug|Win32
-		{28CE1125-B8B2-4FC9-B8B5-01837E30E9A6}.Debug|Win32.Build.0 = Debug|Win32
-		{28CE1125-B8B2-4FC9-B8B5-01837E30E9A6}.Debug|x64.ActiveCfg = Debug|x64
-		{28CE1125-B8B2-4FC9-B8B5-01837E30E9A6}.Debug|x64.Build.0 = Debug|x64
-		{28CE1125-B8B2-4FC9-B8B5-01837E30E9A6}.Release|Win32.ActiveCfg = Release|Win32
-		{28CE1125-B8B2-4FC9-B8B5-01837E30E9A6}.Release|Win32.Build.0 = Release|Win32
-		{28CE1125-B8B2-4FC9-B8B5-01837E30E9A6}.Release|x64.ActiveCfg = Release|x64
-		{28CE1125-B8B2-4FC9-B8B5-01837E30E9A6}.Release|x64.Build.0 = Release|x64
-		{A0FE2B56-6C50-4A6D-8FAA-CE094583CACD}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A0FE2B56-6C50-4A6D-8FAA-CE094583CACD}.Debug|Win32.Build.0 = Debug|Win32
-		{A0FE2B56-6C50-4A6D-8FAA-CE094583CACD}.Debug|x64.ActiveCfg = Debug|x64
-		{A0FE2B56-6C50-4A6D-8FAA-CE094583CACD}.Debug|x64.Build.0 = Debug|x64
-		{A0FE2B56-6C50-4A6D-8FAA-CE094583CACD}.Release|Win32.ActiveCfg = Release|Win32
-		{A0FE2B56-6C50-4A6D-8FAA-CE094583CACD}.Release|Win32.Build.0 = Release|Win32
-		{A0FE2B56-6C50-4A6D-8FAA-CE094583CACD}.Release|x64.ActiveCfg = Release|x64
-		{A0FE2B56-6C50-4A6D-8FAA-CE094583CACD}.Release|x64.Build.0 = Release|x64
-		{54925E60-29DC-4781-9AF4-F8C18FCF3B50}.Debug|Win32.ActiveCfg = Debug|Win32
-		{54925E60-29DC-4781-9AF4-F8C18FCF3B50}.Debug|Win32.Build.0 = Debug|Win32
-		{54925E60-29DC-4781-9AF4-F8C18FCF3B50}.Debug|x64.ActiveCfg = Debug|x64
-		{54925E60-29DC-4781-9AF4-F8C18FCF3B50}.Debug|x64.Build.0 = Debug|x64
-		{54925E60-29DC-4781-9AF4-F8C18FCF3B50}.Release|Win32.ActiveCfg = Release|Win32
-		{54925E60-29DC-4781-9AF4-F8C18FCF3B50}.Release|Win32.Build.0 = Release|Win32
-		{54925E60-29DC-4781-9AF4-F8C18FCF3B50}.Release|x64.ActiveCfg = Release|x64
-		{54925E60-29DC-4781-9AF4-F8C18FCF3B50}.Release|x64.Build.0 = Release|x64
-		{A5ABC2B6-0159-4506-B04A-7EE0B22BBCA0}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A5ABC2B6-0159-4506-B04A-7EE0B22BBCA0}.Debug|Win32.Build.0 = Debug|Win32
-		{A5ABC2B6-0159-4506-B04A-7EE0B22BBCA0}.Debug|x64.ActiveCfg = Debug|x64
-		{A5ABC2B6-0159-4506-B04A-7EE0B22BBCA0}.Debug|x64.Build.0 = Debug|x64
-		{A5ABC2B6-0159-4506-B04A-7EE0B22BBCA0}.Release|Win32.ActiveCfg = Release|Win32
-		{A5ABC2B6-0159-4506-B04A-7EE0B22BBCA0}.Release|Win32.Build.0 = Release|Win32
-		{A5ABC2B6-0159-4506-B04A-7EE0B22BBCA0}.Release|x64.ActiveCfg = Release|x64
-		{A5ABC2B6-0159-4506-B04A-7EE0B22BBCA0}.Release|x64.Build.0 = Release|x64
-		{2F7A5DBA-0391-4235-9D23-982454349B55}.Debug|Win32.ActiveCfg = Debug|Win32
-		{2F7A5DBA-0391-4235-9D23-982454349B55}.Debug|Win32.Build.0 = Debug|Win32
-		{2F7A5DBA-0391-4235-9D23-982454349B55}.Debug|x64.ActiveCfg = Debug|x64
-		{2F7A5DBA-0391-4235-9D23-982454349B55}.Debug|x64.Build.0 = Debug|x64
-		{2F7A5DBA-0391-4235-9D23-982454349B55}.Release|Win32.ActiveCfg = Release|Win32
-		{2F7A5DBA-0391-4235-9D23-982454349B55}.Release|Win32.Build.0 = Release|Win32
-		{2F7A5DBA-0391-4235-9D23-982454349B55}.Release|x64.ActiveCfg = Release|x64
-		{2F7A5DBA-0391-4235-9D23-982454349B55}.Release|x64.Build.0 = Release|x64
-		{23D2C17D-68EB-4C91-8838-DDD787AD213B}.Debug|Win32.ActiveCfg = Debug|Win32
-		{23D2C17D-68EB-4C91-8838-DDD787AD213B}.Debug|Win32.Build.0 = Debug|Win32
-		{23D2C17D-68EB-4C91-8838-DDD787AD213B}.Debug|x64.ActiveCfg = Debug|x64
-		{23D2C17D-68EB-4C91-8838-DDD787AD213B}.Debug|x64.Build.0 = Debug|x64
-		{23D2C17D-68EB-4C91-8838-DDD787AD213B}.Release|Win32.ActiveCfg = Release|Win32
-		{23D2C17D-68EB-4C91-8838-DDD787AD213B}.Release|Win32.Build.0 = Release|Win32
-		{23D2C17D-68EB-4C91-8838-DDD787AD213B}.Release|x64.ActiveCfg = Release|x64
-		{23D2C17D-68EB-4C91-8838-DDD787AD213B}.Release|x64.Build.0 = Release|x64
-		{9B3C3FDC-140F-4B03-A9FD-3ADCD9E111BD}.Debug|Win32.ActiveCfg = Debug|Win32
-		{9B3C3FDC-140F-4B03-A9FD-3ADCD9E111BD}.Debug|Win32.Build.0 = Debug|Win32
-		{9B3C3FDC-140F-4B03-A9FD-3ADCD9E111BD}.Debug|x64.ActiveCfg = Debug|x64
-		{9B3C3FDC-140F-4B03-A9FD-3ADCD9E111BD}.Debug|x64.Build.0 = Debug|x64
-		{9B3C3FDC-140F-4B03-A9FD-3ADCD9E111BD}.Release|Win32.ActiveCfg = Release|Win32
-		{9B3C3FDC-140F-4B03-A9FD-3ADCD9E111BD}.Release|Win32.Build.0 = Release|Win32
-		{9B3C3FDC-140F-4B03-A9FD-3ADCD9E111BD}.Release|x64.ActiveCfg = Release|x64
-		{9B3C3FDC-140F-4B03-A9FD-3ADCD9E111BD}.Release|x64.Build.0 = Release|x64
-		{0E07C8EB-3063-4606-A51A-525C7C24D63D}.Debug|Win32.ActiveCfg = Debug|Win32
-		{0E07C8EB-3063-4606-A51A-525C7C24D63D}.Debug|Win32.Build.0 = Debug|Win32
-		{0E07C8EB-3063-4606-A51A-525C7C24D63D}.Debug|x64.ActiveCfg = Debug|x64
-		{0E07C8EB-3063-4606-A51A-525C7C24D63D}.Debug|x64.Build.0 = Debug|x64
-		{0E07C8EB-3063-4606-A51A-525C7C24D63D}.Release|Win32.ActiveCfg = Release|Win32
-		{0E07C8EB-3063-4606-A51A-525C7C24D63D}.Release|Win32.Build.0 = Release|Win32
-		{0E07C8EB-3063-4606-A51A-525C7C24D63D}.Release|x64.ActiveCfg = Release|x64
-		{0E07C8EB-3063-4606-A51A-525C7C24D63D}.Release|x64.Build.0 = Release|x64
-		{4DB1C224-FB7B-4AA2-8E59-2252CBBA6EE2}.Debug|Win32.ActiveCfg = Debug|Win32
-		{4DB1C224-FB7B-4AA2-8E59-2252CBBA6EE2}.Debug|Win32.Build.0 = Debug|Win32
-		{4DB1C224-FB7B-4AA2-8E59-2252CBBA6EE2}.Debug|x64.ActiveCfg = Debug|x64
-		{4DB1C224-FB7B-4AA2-8E59-2252CBBA6EE2}.Debug|x64.Build.0 = Debug|x64
-		{4DB1C224-FB7B-4AA2-8E59-2252CBBA6EE2}.Release|Win32.ActiveCfg = Release|Win32
-		{4DB1C224-FB7B-4AA2-8E59-2252CBBA6EE2}.Release|Win32.Build.0 = Release|Win32
-		{4DB1C224-FB7B-4AA2-8E59-2252CBBA6EE2}.Release|x64.ActiveCfg = Release|x64
-		{4DB1C224-FB7B-4AA2-8E59-2252CBBA6EE2}.Release|x64.Build.0 = Release|x64
-		{093BD170-68C0-488A-890F-F3BB3B9A7FD1}.Debug|Win32.ActiveCfg = Debug|Win32
-		{093BD170-68C0-488A-890F-F3BB3B9A7FD1}.Debug|Win32.Build.0 = Debug|Win32
-		{093BD170-68C0-488A-890F-F3BB3B9A7FD1}.Debug|x64.ActiveCfg = Debug|x64
-		{093BD170-68C0-488A-890F-F3BB3B9A7FD1}.Debug|x64.Build.0 = Debug|x64
-		{093BD170-68C0-488A-890F-F3BB3B9A7FD1}.Release|Win32.ActiveCfg = Release|Win32
-		{093BD170-68C0-488A-890F-F3BB3B9A7FD1}.Release|Win32.Build.0 = Release|Win32
-		{093BD170-68C0-488A-890F-F3BB3B9A7FD1}.Release|x64.ActiveCfg = Release|x64
-		{093BD170-68C0-488A-890F-F3BB3B9A7FD1}.Release|x64.Build.0 = Release|x64
-		{1325973E-9E7F-40AE-A49A-FEED4BF98F37}.Debug|Win32.ActiveCfg = Debug|Win32
-		{1325973E-9E7F-40AE-A49A-FEED4BF98F37}.Debug|Win32.Build.0 = Debug|Win32
-		{1325973E-9E7F-40AE-A49A-FEED4BF98F37}.Debug|x64.ActiveCfg = Debug|x64
-		{1325973E-9E7F-40AE-A49A-FEED4BF98F37}.Debug|x64.Build.0 = Debug|x64
-		{1325973E-9E7F-40AE-A49A-FEED4BF98F37}.Release|Win32.ActiveCfg = Release|Win32
-		{1325973E-9E7F-40AE-A49A-FEED4BF98F37}.Release|Win32.Build.0 = Release|Win32
-		{1325973E-9E7F-40AE-A49A-FEED4BF98F37}.Release|x64.ActiveCfg = Release|x64
-		{1325973E-9E7F-40AE-A49A-FEED4BF98F37}.Release|x64.Build.0 = Release|x64
-		{B1112A85-D22C-4ABD-ACDB-BD1A2E78E521}.Debug|Win32.ActiveCfg = Debug|Win32
-		{B1112A85-D22C-4ABD-ACDB-BD1A2E78E521}.Debug|Win32.Build.0 = Debug|Win32
-		{B1112A85-D22C-4ABD-ACDB-BD1A2E78E521}.Debug|x64.ActiveCfg = Debug|x64
-		{B1112A85-D22C-4ABD-ACDB-BD1A2E78E521}.Debug|x64.Build.0 = Debug|x64
-		{B1112A85-D22C-4ABD-ACDB-BD1A2E78E521}.Release|Win32.ActiveCfg = Release|Win32
-		{B1112A85-D22C-4ABD-ACDB-BD1A2E78E521}.Release|Win32.Build.0 = Release|Win32
-		{B1112A85-D22C-4ABD-ACDB-BD1A2E78E521}.Release|x64.ActiveCfg = Release|x64
-		{B1112A85-D22C-4ABD-ACDB-BD1A2E78E521}.Release|x64.Build.0 = Release|x64
-		{666CE3DF-B4DB-4BC1-AD2E-10B74401E82C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{666CE3DF-B4DB-4BC1-AD2E-10B74401E82C}.Debug|Win32.Build.0 = Debug|Win32
-		{666CE3DF-B4DB-4BC1-AD2E-10B74401E82C}.Debug|x64.ActiveCfg = Debug|x64
-		{666CE3DF-B4DB-4BC1-AD2E-10B74401E82C}.Debug|x64.Build.0 = Debug|x64
-		{666CE3DF-B4DB-4BC1-AD2E-10B74401E82C}.Release|Win32.ActiveCfg = Release|Win32
-		{666CE3DF-B4DB-4BC1-AD2E-10B74401E82C}.Release|Win32.Build.0 = Release|Win32
-		{666CE3DF-B4DB-4BC1-AD2E-10B74401E82C}.Release|x64.ActiveCfg = Release|x64
-		{666CE3DF-B4DB-4BC1-AD2E-10B74401E82C}.Release|x64.Build.0 = Release|x64
-		{BBFD16DD-5EC0-4ADC-8CA6-47725719F2F2}.Debug|Win32.ActiveCfg = Debug|Win32
-		{BBFD16DD-5EC0-4ADC-8CA6-47725719F2F2}.Debug|Win32.Build.0 = Debug|Win32
-		{BBFD16DD-5EC0-4ADC-8CA6-47725719F2F2}.Debug|x64.ActiveCfg = Debug|x64
-		{BBFD16DD-5EC0-4ADC-8CA6-47725719F2F2}.Debug|x64.Build.0 = Debug|x64
-		{BBFD16DD-5EC0-4ADC-8CA6-47725719F2F2}.Release|Win32.ActiveCfg = Release|Win32
-		{BBFD16DD-5EC0-4ADC-8CA6-47725719F2F2}.Release|Win32.Build.0 = Release|Win32
-		{BBFD16DD-5EC0-4ADC-8CA6-47725719F2F2}.Release|x64.ActiveCfg = Release|x64
-		{BBFD16DD-5EC0-4ADC-8CA6-47725719F2F2}.Release|x64.Build.0 = Release|x64
-		{DAF78A01-21D4-4B88-84D6-808CE1B8D97E}.Debug|Win32.ActiveCfg = Debug|Win32
-		{DAF78A01-21D4-4B88-84D6-808CE1B8D97E}.Debug|Win32.Build.0 = Debug|Win32
-		{DAF78A01-21D4-4B88-84D6-808CE1B8D97E}.Debug|x64.ActiveCfg = Debug|x64
-		{DAF78A01-21D4-4B88-84D6-808CE1B8D97E}.Debug|x64.Build.0 = Debug|x64
-		{DAF78A01-21D4-4B88-84D6-808CE1B8D97E}.Release|Win32.ActiveCfg = Release|Win32
-		{DAF78A01-21D4-4B88-84D6-808CE1B8D97E}.Release|Win32.Build.0 = Release|Win32
-		{DAF78A01-21D4-4B88-84D6-808CE1B8D97E}.Release|x64.ActiveCfg = Release|x64
-		{DAF78A01-21D4-4B88-84D6-808CE1B8D97E}.Release|x64.Build.0 = Release|x64
-		{41047738-C5C7-4821-9E34-E3DCA990E716}.Debug|Win32.ActiveCfg = Debug|Win32
-		{41047738-C5C7-4821-9E34-E3DCA990E716}.Debug|Win32.Build.0 = Debug|Win32
-		{41047738-C5C7-4821-9E34-E3DCA990E716}.Debug|x64.ActiveCfg = Debug|x64
-		{41047738-C5C7-4821-9E34-E3DCA990E716}.Debug|x64.Build.0 = Debug|x64
-		{41047738-C5C7-4821-9E34-E3DCA990E716}.Release|Win32.ActiveCfg = Release|Win32
-		{41047738-C5C7-4821-9E34-E3DCA990E716}.Release|Win32.Build.0 = Release|Win32
-		{41047738-C5C7-4821-9E34-E3DCA990E716}.Release|x64.ActiveCfg = Release|x64
-		{41047738-C5C7-4821-9E34-E3DCA990E716}.Release|x64.Build.0 = Release|x64
-		{C22AB767-6673-4A9D-962E-A47C3D88D57E}.Debug|Win32.ActiveCfg = Debug|Win32
-		{C22AB767-6673-4A9D-962E-A47C3D88D57E}.Debug|Win32.Build.0 = Debug|Win32
-		{C22AB767-6673-4A9D-962E-A47C3D88D57E}.Debug|x64.ActiveCfg = Debug|x64
-		{C22AB767-6673-4A9D-962E-A47C3D88D57E}.Debug|x64.Build.0 = Debug|x64
-		{C22AB767-6673-4A9D-962E-A47C3D88D57E}.Release|Win32.ActiveCfg = Release|Win32
-		{C22AB767-6673-4A9D-962E-A47C3D88D57E}.Release|Win32.Build.0 = Release|Win32
-		{C22AB767-6673-4A9D-962E-A47C3D88D57E}.Release|x64.ActiveCfg = Release|x64
-		{C22AB767-6673-4A9D-962E-A47C3D88D57E}.Release|x64.Build.0 = Release|x64
-		{5C203F0F-570E-4A65-9429-0C5F86DFE918}.Debug|Win32.ActiveCfg = Debug|Win32
-		{5C203F0F-570E-4A65-9429-0C5F86DFE918}.Debug|Win32.Build.0 = Debug|Win32
-		{5C203F0F-570E-4A65-9429-0C5F86DFE918}.Debug|x64.ActiveCfg = Debug|x64
-		{5C203F0F-570E-4A65-9429-0C5F86DFE918}.Debug|x64.Build.0 = Debug|x64
-		{5C203F0F-570E-4A65-9429-0C5F86DFE918}.Release|Win32.ActiveCfg = Release|Win32
-		{5C203F0F-570E-4A65-9429-0C5F86DFE918}.Release|Win32.Build.0 = Release|Win32
-		{5C203F0F-570E-4A65-9429-0C5F86DFE918}.Release|x64.ActiveCfg = Release|x64
-		{5C203F0F-570E-4A65-9429-0C5F86DFE918}.Release|x64.Build.0 = Release|x64
-		{8FC75365-6554-44E0-A7BB-F4DE3F5F8568}.Debug|Win32.ActiveCfg = Debug|Win32
-		{8FC75365-6554-44E0-A7BB-F4DE3F5F8568}.Debug|Win32.Build.0 = Debug|Win32
-		{8FC75365-6554-44E0-A7BB-F4DE3F5F8568}.Debug|x64.ActiveCfg = Debug|x64
-		{8FC75365-6554-44E0-A7BB-F4DE3F5F8568}.Debug|x64.Build.0 = Debug|x64
-		{8FC75365-6554-44E0-A7BB-F4DE3F5F8568}.Release|Win32.ActiveCfg = Release|Win32
-		{8FC75365-6554-44E0-A7BB-F4DE3F5F8568}.Release|Win32.Build.0 = Release|Win32
-		{8FC75365-6554-44E0-A7BB-F4DE3F5F8568}.Release|x64.ActiveCfg = Release|x64
-		{8FC75365-6554-44E0-A7BB-F4DE3F5F8568}.Release|x64.Build.0 = Release|x64
-		{E863DBE2-0795-47B1-9DBB-E1E5F996C517}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E863DBE2-0795-47B1-9DBB-E1E5F996C517}.Debug|Win32.Build.0 = Debug|Win32
-		{E863DBE2-0795-47B1-9DBB-E1E5F996C517}.Debug|x64.ActiveCfg = Debug|x64
-		{E863DBE2-0795-47B1-9DBB-E1E5F996C517}.Debug|x64.Build.0 = Debug|x64
-		{E863DBE2-0795-47B1-9DBB-E1E5F996C517}.Release|Win32.ActiveCfg = Release|Win32
-		{E863DBE2-0795-47B1-9DBB-E1E5F996C517}.Release|Win32.Build.0 = Release|Win32
-		{E863DBE2-0795-47B1-9DBB-E1E5F996C517}.Release|x64.ActiveCfg = Release|x64
-		{E863DBE2-0795-47B1-9DBB-E1E5F996C517}.Release|x64.Build.0 = Release|x64
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Debug|Win32.Build.0 = Debug|Win32
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Debug|x64.ActiveCfg = Debug|x64
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Debug|x64.Build.0 = Debug|x64
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Release|Win32.ActiveCfg = Release|Win32
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Release|Win32.Build.0 = Release|Win32
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Release|x64.ActiveCfg = Release|x64
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Release|x64.Build.0 = Release|x64
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Debug|Win32.ActiveCfg = Debug|Win32
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Debug|Win32.Build.0 = Debug|Win32
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Debug|x64.ActiveCfg = Debug|x64
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Debug|x64.Build.0 = Debug|x64
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Release|Win32.ActiveCfg = Release|Win32
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Release|Win32.Build.0 = Release|Win32
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Release|x64.ActiveCfg = Release|x64
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Release|x64.Build.0 = Release|x64
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-EndGlobal
+//==============================================================================
+/*
+    \author    Your Name
+*/
+//==============================================================================
+
+//------------------------------------------------------------------------------
+#include "chai3d.h"
+//------------------------------------------------------------------------------
+using namespace chai3d;
+using namespace std;
+//------------------------------------------------------------------------------
+#ifndef MACOSX
+#include "GL/glut.h"
+#else
+#include "GLUT/glut.h"
+#endif
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// GENERAL SETTINGS
+//------------------------------------------------------------------------------
+
+// stereo Mode
+/*
+    C_STEREO_DISABLED:            Stereo is disabled 
+    C_STEREO_ACTIVE:              Active stereo for OpenGL NVDIA QUADRO cards
+    C_STEREO_PASSIVE_LEFT_RIGHT:  Passive stereo where L/R images are rendered next to each other
+    C_STEREO_PASSIVE_TOP_BOTTOM:  Passive stereo where L/R images are rendered above each other
+*/
+cStereoMode stereoMode = C_STEREO_DISABLED;
+
+// fullscreen mode
+bool fullscreen = false;
+
+// mirrored display
+bool mirroredDisplay = false;
+
+// User Input
+int mode_select = 0;
+bool display_mode = false;
+//------------------------------------------------------------------------------
+// DECLARED VARIABLES
+//------------------------------------------------------------------------------
+
+// a world that contains all objects of the virtual environment
+cWorld* world;
+
+// a camera to render the world in the window display
+cCamera* camera;
+
+// a light source to illuminate the objects in the world
+cDirectionalLight *light;
+
+// a haptic device handler
+cHapticDeviceHandler* handler;
+
+// a pointer to the current haptic device
+cGenericHapticDevicePtr hapticDevice;
+
+// a label to display the rate [Hz] at which the simulation is running
+cLabel* labelHapticRate;
+
+// a small sphere (cursor) representing the haptic device 
+cShapeSphere* cursor;
+
+// flag to indicate if the haptic simulation currently running
+bool simulationRunning = false;
+
+// flag to indicate if the haptic simulation has terminated
+bool simulationFinished = false;
+
+// frequency counter to measure the simulation haptic rate
+cFrequencyCounter frequencyCounter;
+
+// haptic thread
+cThread* hapticsThread;
+
+// information about computer screen and GLUT display window
+int screenW;
+int screenH;
+int windowW;
+int windowH;
+int windowPosX;
+int windowPosY;
+
+
+//------------------------------------------------------------------------------
+// DECLARED FUNCTIONS
+//------------------------------------------------------------------------------
+
+// callback when the window display is resized
+void resizeWindow(int w, int h);
+
+// callback when a key is pressed
+void keySelect(unsigned char key, int x, int y);
+
+// callback to render graphic scene
+void updateGraphics(void);
+
+// callback of GLUT timer
+void graphicsTimer(int data);
+
+// function that closes the application
+void close(void);
+
+// main haptics simulation loop
+void updateHaptics(void);
+
+
+//==============================================================================
+/*
+    TEMPLATE:    application.cpp
+
+    Description of your application.
+*/
+//==============================================================================
+
+int main(int argc, char* argv[])
+{
+    //--------------------------------------------------------------------------
+    // INITIALIZATION
+    //--------------------------------------------------------------------------
+    cout << endl;
+    cout << "-----------------------------------" << endl;
+    cout << "CHAI3D" << endl;
+    cout << "-----------------------------------" << endl << endl << endl;
+    cout << "Keyboard Options:" << endl << endl;
+    cout << "[f] - Enable/Disable full screen mode" << endl;
+    cout << "[m] - Enable/Disable vertical mirroring" << endl;
+    cout << "[q] - Exit application" << endl;
+    cout << "\n\n" << endl;
+    cout << "[1] - Virtual Spring" << endl;
+    cout << "[2] - Linear Damping" << endl;
+    cout << "[3] - Virtual wall" << endl;
+    cout << "[4] - Hard wall" << endl;
+    cout << "[`] - EMERGENCY STOP" << endl;
+    cout << endl << endl;
+
+
+    //--------------------------------------------------------------------------
+    // OPENGL - WINDOW DISPLAY
+    //--------------------------------------------------------------------------
+
+    // initialize GLUT
+    glutInit(&argc, argv);
+
+    // retrieve  resolution of computer display and position window accordingly
+    screenW = glutGet(GLUT_SCREEN_WIDTH);
+    screenH = glutGet(GLUT_SCREEN_HEIGHT);
+    windowW = (int)(0.8 * screenH);
+    windowH = (int)(0.5 * screenH);
+    windowPosY = (screenH - windowH) / 2;
+    windowPosX = windowPosY; 
+
+    // initialize the OpenGL GLUT window
+    glutInitWindowPosition(windowPosX, windowPosY);
+    glutInitWindowSize(windowW, windowH);
+
+    if (stereoMode == C_STEREO_ACTIVE)
+        glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE | GLUT_STEREO);
+    else
+        glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
+
+    // create display context and initialize GLEW library
+    glutCreateWindow(argv[0]);
+
+#ifdef GLEW_VERSION
+    // initialize GLEW
+    glewInit();
+#endif
+
+    // setup GLUT options
+    glutDisplayFunc(updateGraphics);
+    glutKeyboardFunc(keySelect);
+    glutReshapeFunc(resizeWindow);
+    glutSetWindowTitle("CHAI3D");
+
+    // set fullscreen mode
+    if (fullscreen)
+    {
+        glutFullScreen();
+    }
+
+
+    //--------------------------------------------------------------------------
+    // WORLD - CAMERA - LIGHTING
+    //--------------------------------------------------------------------------
+
+    // create a new world.
+    world = new cWorld();
+
+    // set the background color of the environment
+    world->m_backgroundColor.setBlack();
+
+    // create a camera and insert it into the virtual world
+    camera = new cCamera(world);
+    world->addChild(camera);
+
+    // position and orient the camera
+    camera->set( cVector3d (0.5, 0.0, 0.0),    // camera position (eye)
+                 cVector3d (0.0, 0.0, 0.0),    // look at position (target)
+                 cVector3d (0.0, 0.0, 1.0));   // direction of the (up) vector
+
+    // set the near and far clipping planes of the camera
+    camera->setClippingPlanes(0.01, 10.0);
+
+    // set stereo mode
+    camera->setStereoMode(stereoMode);
+
+    // set stereo eye separation and focal length (applies only if stereo is enabled)
+    camera->setStereoEyeSeparation(0.01);
+    camera->setStereoFocalLength(0.5);
+
+    // set vertical mirrored display mode
+    camera->setMirrorVertical(mirroredDisplay);
+
+    // create a directional light source
+    light = new cDirectionalLight(world);
+
+    // insert light source inside world
+    world->addChild(light);
+
+    // enable light source
+    light->setEnabled(true);
+
+    // define direction of light beam
+    light->setDir(-1.0, 0.0, 0.0); 
+
+    // create a sphere (cursor) to represent the haptic device
+    cursor = new cShapeSphere(0.01);
+
+    // insert cursor inside world
+    world->addChild(cursor);
+
+
+    //--------------------------------------------------------------------------
+    // HAPTIC DEVICE
+    //--------------------------------------------------------------------------
+
+    // create a haptic device handler
+    handler = new cHapticDeviceHandler();
+
+    // get a handle to the first haptic device
+    handler->getDevice(hapticDevice, 0);
+
+    // open a connection to haptic device
+    hapticDevice->open();
+
+    // calibrate device (if necessary)
+    hapticDevice->calibrate();
+
+    // retrieve information about the current haptic device
+    cHapticDeviceInfo info = hapticDevice->getSpecifications();
+
+    // display a reference frame if haptic device supports orientations
+    if (info.m_sensedRotation == true)
+    {
+        // display reference frame
+        cursor->setShowFrame(true);
+
+        // set the size of the reference frame
+        cursor->setFrameSize(0.05);
+    }
+
+    // if the device has a gripper, enable the gripper to simulate a user switch
+    hapticDevice->setEnableGripperUserSwitch(true);
+
+
+    //--------------------------------------------------------------------------
+    // WIDGETS
+    //--------------------------------------------------------------------------
+
+    // create a font
+    cFontPtr font = NEW_CFONTCALIBRI20();
+    
+    // create a label to display the haptic rate of the simulation
+    labelHapticRate = new cLabel(font);
+    labelHapticRate->m_fontColor.setWhite();
+    camera->m_frontLayer->addChild(labelHapticRate);
+
+
+    //--------------------------------------------------------------------------
+    // START SIMULATION
+    //--------------------------------------------------------------------------
+
+    // create a thread which starts the main haptics rendering loop
+    hapticsThread = new cThread();
+    hapticsThread->start(updateHaptics, CTHREAD_PRIORITY_HAPTICS);
+
+    // setup callback when application exits
+    atexit(close);
+
+    // start the main graphics rendering loop
+    glutTimerFunc(50, graphicsTimer, 0);
+    glutMainLoop();
+
+    // exit
+    return (0);
+}
+
+//------------------------------------------------------------------------------
+
+void resizeWindow(int w, int h)
+{
+    windowW = w;
+    windowH = h;
+}
+
+//------------------------------------------------------------------------------
+
+void keySelect(unsigned char key, int x, int y)
+{
+    // option ESC: exit
+    if ((key == 27) || (key == 'q'))
+    {
+        close();
+        exit(0);
+    }
+
+    // option f: toggle fullscreen
+    if (key == 'f')
+    {
+        if (fullscreen)
+        {
+            windowPosX = glutGet(GLUT_INIT_WINDOW_X);
+            windowPosY = glutGet(GLUT_INIT_WINDOW_Y);
+            windowW = glutGet(GLUT_INIT_WINDOW_WIDTH);
+            windowH = glutGet(GLUT_INIT_WINDOW_HEIGHT);
+            glutPositionWindow(windowPosX, windowPosY);
+            glutReshapeWindow(windowW, windowH);
+            fullscreen = false;
+        }
+        else
+        {
+            glutFullScreen();
+            fullscreen = true;
+        }
+    }
+
+    // option m: toggle vertical mirroring
+    if (key == 'm')
+    {
+        mirroredDisplay = !mirroredDisplay;
+        camera->setMirrorVertical(mirroredDisplay);
+    }
+
+    // Custom Reads for force input
+    //*************************************************************************************************************************************************************************************************
+    if (key == '`') {
+        mode_select = 0;
+    }
+    if (key == '1') {
+        mode_select = 1;
+        display_mode = true;
+    }
+    if (key == '2') {
+        mode_select = 2;
+        display_mode = true;
+    }
+    if (key == '3') {
+        mode_select = 3;
+        display_mode = true;
+    }
+    if (key == '4') {
+        mode_select = 4;
+        display_mode = true;
+    }
+}
+
+//------------------------------------------------------------------------------
+
+void close(void)
+{
+    // stop the simulation
+    simulationRunning = false;
+
+    // wait for graphics and haptics loops to terminate
+    while (!simulationFinished) { cSleepMs(100); }
+
+    // close haptic device
+    hapticDevice->close();
+
+    // delete resources
+    try {
+        delete hapticsThread;
+    }
+    catch (...) {
+        cout << "ERROR IN DELETING HAPTICS THREAD";
+    }
+    delete world;
+    delete handler;
+}
+
+//------------------------------------------------------------------------------
+
+void graphicsTimer(int data)
+{
+    if (simulationRunning)
+    {
+        glutPostRedisplay();
+    }
+
+    glutTimerFunc(50, graphicsTimer, 0);
+}
+
+//------------------------------------------------------------------------------
+
+void updateGraphics(void)
+{
+    /////////////////////////////////////////////////////////////////////
+    // UPDATE WIDGETS
+    /////////////////////////////////////////////////////////////////////
+
+    // display haptic rate data
+    labelHapticRate->setText(cStr(frequencyCounter.getFrequency(), 0) + " Hz");
+
+    // update position of label
+    labelHapticRate->setLocalPos((int)(0.5 * (windowW - labelHapticRate->getWidth())), 15);
+
+
+    /////////////////////////////////////////////////////////////////////
+    // RENDER SCENE
+    /////////////////////////////////////////////////////////////////////
+
+    // update shadow maps (if any)
+    world->updateShadowMaps(false, mirroredDisplay);
+
+    // render world
+    camera->renderView(windowW, windowH);
+
+    // swap buffers
+    glutSwapBuffers();
+
+    // wait until all GL commands are completed
+    glFinish();
+
+    // check for any OpenGL errors
+    GLenum err;
+    err = glGetError();
+    if (err != GL_NO_ERROR) cout << "Error:  %s\n" << gluErrorString(err);
+}
+
+//------------------------------------------------------------------------------
+
+void updateHaptics(void)
+{
+    // initialize frequency counter
+    frequencyCounter.reset();
+
+    // simulation in now running
+    simulationRunning  = true;
+    simulationFinished = false;
+
+    // main haptic simulation loop
+    while(simulationRunning)
+    {
+        /////////////////////////////////////////////////////////////////////
+        // READ HAPTIC DEVICE
+        /////////////////////////////////////////////////////////////////////
+
+        // read position 
+        cVector3d position;
+        hapticDevice->getPosition(position);
+
+        // read orientation 
+        cMatrix3d rotation;
+        hapticDevice->getRotation(rotation);
+
+        // read user-switch status (button 0)
+        bool button = false;
+        hapticDevice->getUserSwitch(0, button);
+
+
+        /////////////////////////////////////////////////////////////////////
+        // UPDATE 3D CURSOR MODEL
+        /////////////////////////////////////////////////////////////////////
+
+        // update position and orienation of cursor
+        cursor->setLocalPos(position);
+        cursor->setLocalRot(rotation);
+
+        /////////////////////////////////////////////////////////////////////
+        // COMPUTE FORCES
+        /////////////////////////////////////////////////////////////////////
+        
+       
+        // Setup
+        cVector3d force(0, 0, 0);
+        cVector3d torque(0, 0, 0);
+        double gripperForce = 0.0;
+        
+        // User Defined
+        cVector3d wall_limit = (0, 0, 0);
+        cVector3d relative_position;
+        cVector3d center(0, 0, 0);
+
+        // Constants
+        double k_spring = 50;
+        double b_damp = 1000;
+        double k_wall = 2000;
+        double z_limit = -0.05; //[m]
+
+        // Damping information
+        double alpha = 0.8;
+        cVector3d vh;
+        cVector3d vh_new;
+        cVector3d vh_old;
+        cVector3d lastVh;
+        cVector3d lastLastVh;
+        cVector3d last_pos;
+
+        switch(mode_select) {
+            case 0:
+                if (display_mode) { // Display mode once
+                    cout << "Emergency Exit\n";
+                    display_mode = false;
+                }
+                break;
+
+
+            case 1: //Spring Force Feedback
+                if (display_mode) { // Display mode once
+                    cout << "Case 1\n";
+                    display_mode = false;
+                }
+
+                relative_position = position - center;
+                force = -k_spring * relative_position;
+                break;
+
+
+            case 2: //Viscous damping field
+                if (display_mode) { // Display mode once
+                    cout << "Case 2\n";
+                    display_mode = false;
+
+                    // First time, assign default value to  previous timestep values
+                    lastLastVh = (0, 0, 0);
+                    lastVh = (0, 0, 0);
+                    cVector3d lastXh = position;
+
+                }
+                // Calculate and update velocity
+                vh_new = (position - last_pos) * frequencyCounter.getFrequency();
+                vh = alpha * vh_new + (1 - alpha) * vh_old;
+                vh_old = vh;
+
+                cout << "\nvelocity: ", vh;
+                cout << "force: ", force;
+
+                force = -b_damp * vh;
+                break;
+
+            case 3: //Virtual wall
+                if (display_mode) { // Display mode once
+                    cout << "Case 3\n";
+                    display_mode = false;  
+                }
+                cout << "   in Case 3";
+                center.z(z_limit);
+                relative_position = position - center;
+                if (relative_position.z() < 0) {
+                    force.z(-1 * k_wall * relative_position.z());
+                }
+                else {
+                    force.z(0);
+                }
+
+                break;
+
+
+            case 4: //Decaying Sinusoid Wall
+                if (display_mode) { // Display mode once
+                    cout << "Case 4\n";
+                    display_mode = false;
+                }
+                break;
+        }
+
+        
+
+
+        /////////////////////////////////////////////////////////////////////
+        // APPLY FORCES
+        /////////////////////////////////////////////////////////////////////
+
+        // send computed force, torque, and gripper force to haptic device
+        hapticDevice->setForceAndTorqueAndGripperForce(force, torque, gripperForce);
+
+        // update frequency counter
+        frequencyCounter.signal(1);
+    }
+    
+    // exit haptics thread
+    simulationFinished = true;
+}
+
+//------------------------------------------------------------------------------
