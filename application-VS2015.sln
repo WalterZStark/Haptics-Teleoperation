@@ -1,51 +1,841 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "application-GLUT", "application-VS2015.vcxproj", "{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0} = {A9F01342-5463-4634-B1F9-BF98CD5591B0}
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18} = {71AF75A0-52B6-4C1B-8E56-CB31C6741A18}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CHAI3D", "..\..\CHAI3D-VS2015.vcxproj", "{A9F01342-5463-4634-B1F9-BF98CD5591B0}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freeglut", "..\..\extras\freeglut\freeglut-VS2015.vcxproj", "{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Win32 = Debug|Win32
-		Debug|x64 = Debug|x64
-		Release|Win32 = Release|Win32
-		Release|x64 = Release|x64
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Debug|Win32.ActiveCfg = Debug|Win32
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Debug|Win32.Build.0 = Debug|Win32
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Debug|x64.ActiveCfg = Debug|x64
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Debug|x64.Build.0 = Debug|x64
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Release|Win32.ActiveCfg = Release|Win32
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Release|Win32.Build.0 = Release|Win32
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Release|x64.ActiveCfg = Release|x64
-		{DF4A1F32-BA3E-4604-A9F5-721CAAA9EA71}.Release|x64.Build.0 = Release|x64
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Debug|Win32.ActiveCfg = Debug|Win32
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Debug|Win32.Build.0 = Debug|Win32
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Debug|x64.ActiveCfg = Debug|x64
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Debug|x64.Build.0 = Debug|x64
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Release|Win32.ActiveCfg = Release|Win32
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Release|Win32.Build.0 = Release|Win32
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Release|x64.ActiveCfg = Release|x64
-		{A9F01342-5463-4634-B1F9-BF98CD5591B0}.Release|x64.Build.0 = Release|x64
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Debug|Win32.ActiveCfg = Debug|Win32
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Debug|Win32.Build.0 = Debug|Win32
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Debug|x64.ActiveCfg = Debug|x64
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Debug|x64.Build.0 = Debug|x64
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Release|Win32.ActiveCfg = Release|Win32
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Release|Win32.Build.0 = Release|Win32
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Release|x64.ActiveCfg = Release|x64
-		{71AF75A0-52B6-4C1B-8E56-CB31C6741A18}.Release|x64.Build.0 = Release|x64
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-EndGlobal
+//==============================================================================
+/*
+    \author    Jacob Yan Walter Stark Eloy Mier
+*/
+//==============================================================================
+
+//------------------------------------------------------------------------------
+#include "chai3d.h"
+#include <chrono>
+//------------------------------------------------------------------------------
+using namespace chai3d;
+using namespace std;
+//------------------------------------------------------------------------------
+#ifndef MACOSX
+#include "GL/glut.h"
+#else
+#include "GLUT/glut.h"
+#endif
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// GENERAL SETTINGS
+//------------------------------------------------------------------------------
+
+// stereo Mode
+/*
+    C_STEREO_DISABLED:            Stereo is disabled 
+    C_STEREO_ACTIVE:              Active stereo for OpenGL NVDIA QUADRO cards
+    C_STEREO_PASSIVE_LEFT_RIGHT:  Passive stereo where L/R images are rendered next to each other
+    C_STEREO_PASSIVE_TOP_BOTTOM:  Passive stereo where L/R images are rendered above each other
+*/
+cStereoMode stereoMode = C_STEREO_DISABLED;
+
+// fullscreen mode
+bool fullscreen = false;
+
+// mirrored display
+bool mirroredDisplay = false;
+
+// User Input
+int mode_select = 0;
+bool display_mode = false;
+int last_state = 0;
+
+// Hard Wall
+bool still_touching = false;
+std::chrono::steady_clock::time_point begin_hard = std::chrono::steady_clock::now();
+
+// Create List for Devices
+
+
+//------------------------------------------------------------------------------
+// DECLARED VARIABLES
+//------------------------------------------------------------------------------
+
+// a world that contains all objects of the virtual environment
+cWorld* world;
+
+// a camera to render the world in the window display
+cCamera* camera;
+
+// a light source to illuminate the objects in the world
+cDirectionalLight *light;
+
+// a haptic device handler
+cHapticDeviceHandler* handler;
+
+//// TEAM MODIFIED
+// maximum number of devices supported by this application
+const int MAX_DEVICES = 2;
+
+// a pointer to the current haptic device
+cGenericHapticDevicePtr hapticDevice[MAX_DEVICES];
+
+// some small spheres (cursor) representing position of each haptic device
+cShapeSphere* cursor[MAX_DEVICES];
+
+// a label to display the rate [Hz] at which the simulation is running
+cLabel* labelHapticRate;
+
+// flag to indicate if the haptic simulation currently running
+bool simulationRunning = false;
+
+// flag to indicate if the haptic simulation has terminated
+bool simulationFinished = false;
+
+// frequency counter to measure the simulation haptic rate
+cFrequencyCounter frequencyCounter;
+
+// haptic thread
+cThread* hapticsThread;
+
+// information about computer screen and GLUT display window
+int screenW;
+int screenH;
+int windowW;
+int windowH;
+int windowPosX;
+int windowPosY;
+
+// User Declared
+int numHapticDevices;
+int active_device = 0;
+
+// 
+//------------------------------------------------------------------------------
+// DECLARED FUNCTIONS
+//------------------------------------------------------------------------------
+
+// callback when the window display is resized
+void resizeWindow(int w, int h);
+
+// callback when a key is pressed
+void keySelect(unsigned char key, int x, int y);
+
+// callback to render graphic scene
+void updateGraphics(void);
+
+// callback of GLUT timer
+void graphicsTimer(int data);
+
+// function that closes the application
+void close(void);
+
+// main haptics simulation loop
+void updateHaptics(void);
+
+
+//==============================================================================
+/*
+    TEMPLATE:    application.cpp
+
+    Description of your application.
+*/
+//==============================================================================
+
+int main(int argc, char* argv[])
+{
+    //--------------------------------------------------------------------------
+    // INITIALIZATION
+    //--------------------------------------------------------------------------
+    cout << endl;
+    cout << "-----------------------------------" << endl;
+    cout << "CHAI3D" << endl;
+    cout << "-----------------------------------" << endl << endl << endl;
+    cout << "Keyboard Options:" << endl << endl;
+    cout << "[f] - Enable/Disable full screen mode" << endl;
+    cout << "[m] - Enable/Disable vertical mirroring" << endl;
+    cout << "[q] - Exit application" << endl;
+    cout << "\n\n" << endl;
+    cout << "[1] - Virtual Spring" << endl;
+    cout << "[2] - Linear Damping" << endl;
+    cout << "[3] - Virtual wall" << endl;
+    cout << "[4] - Hard wall" << endl;
+    cout << "[5] - Position Exchange" << endl;
+    cout << "[6] - Position Scaling Position Exchange" << endl;
+    cout << "[7] - Force Scaling Position Exchange" << endl;
+    cout << "[9] - CHANGE ACTIVE DEVICE" << endl;
+    cout << "[`] - EMERGENCY STOP" << endl;
+    cout << endl << endl;
+
+
+    //--------------------------------------------------------------------------
+    // OPENGL - WINDOW DISPLAY
+    //--------------------------------------------------------------------------
+
+    // initialize GLUT
+    glutInit(&argc, argv);
+
+    // retrieve  resolution of computer display and position window accordingly
+    screenW = glutGet(GLUT_SCREEN_WIDTH);
+    screenH = glutGet(GLUT_SCREEN_HEIGHT);
+    windowW = (int)(0.8 * screenH);
+    windowH = (int)(0.5 * screenH);
+    windowPosY = (screenH - windowH) / 2;
+    windowPosX = windowPosY; 
+
+    // initialize the OpenGL GLUT window
+    glutInitWindowPosition(windowPosX, windowPosY);
+    glutInitWindowSize(windowW, windowH);
+
+    if (stereoMode == C_STEREO_ACTIVE)
+        glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE | GLUT_STEREO);
+    else
+        glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
+
+    // create display context and initialize GLEW library
+    glutCreateWindow(argv[0]);
+
+#ifdef GLEW_VERSION
+    // initialize GLEW
+    glewInit();
+#endif
+
+    // setup GLUT options
+    glutDisplayFunc(updateGraphics);
+    glutKeyboardFunc(keySelect);
+    glutReshapeFunc(resizeWindow);
+    glutSetWindowTitle("CHAI3D");
+
+    // set fullscreen mode
+    if (fullscreen)
+    {
+        glutFullScreen();
+    }
+
+
+    //--------------------------------------------------------------------------
+    // WORLD - CAMERA - LIGHTING
+    //--------------------------------------------------------------------------
+
+    // create a new world.
+    world = new cWorld();
+
+    // set the background color of the environment
+    world->m_backgroundColor.setBlack();
+
+    // create a camera and insert it into the virtual world
+    camera = new cCamera(world);
+    world->addChild(camera);
+
+    // position and orient the camera
+    camera->set( cVector3d (0.5, 0.0, 0.0),    // camera position (eye)
+                 cVector3d (0.0, 0.0, 0.0),    // look at position (target)
+                 cVector3d (0.0, 0.0, 1.0));   // direction of the (up) vector
+
+    // set the near and far clipping planes of the camera
+    camera->setClippingPlanes(0.01, 10.0);
+
+    // set stereo mode
+    camera->setStereoMode(stereoMode);
+
+    // set stereo eye separation and focal length (applies only if stereo is enabled)
+    camera->setStereoEyeSeparation(0.01);
+    camera->setStereoFocalLength(0.5);
+
+    // set vertical mirrored display mode
+    camera->setMirrorVertical(mirroredDisplay);
+
+    // create a directional light source
+    light = new cDirectionalLight(world);
+
+    // insert light source inside world
+    world->addChild(light);
+
+    // enable light source
+    light->setEnabled(true);
+
+    // define direction of light beam
+    light->setDir(-1.0, 0.0, 0.0); 
+
+    
+
+    //--------------------------------------------------------------------------
+    // HAPTIC DEVICE
+    //--------------------------------------------------------------------------
+
+    // create a haptic device handler
+    handler = new cHapticDeviceHandler();
+
+    // get number of haptic devices
+    numHapticDevices = handler->getNumDevices();
+    cout << cStr(numHapticDevices) << " Devices Detected" << endl;
+
+    // Operate on each device
+    for (int i = 0; i < numHapticDevices; i++) {
+        // get a handle to the first haptic device
+        handler->getDevice(hapticDevice[i], i);
+
+        // open a connection to haptic device
+        hapticDevice[i]->open();
+
+        // calibrate device (if necessary)
+        hapticDevice[i]->calibrate();
+
+        // retrieve information about the current haptic device
+        cHapticDeviceInfo info = hapticDevice[i]->getSpecifications();
+
+        // Create objects for cursors
+      
+        // create a sphere (cursor) to represent the haptic device
+        cursor[i] = new cShapeSphere(0.01);
+
+        // insert cursor inside world
+        world->addChild(cursor[i]);
+        
+
+        // display a reference frame if haptic device supports orientations
+        if (info.m_sensedRotation == true)
+        {
+            // display reference frame
+            cursor[i]->setShowFrame(true);
+
+            // set the size of the reference frame
+            cursor[i]->setFrameSize(0.05);
+        }
+
+        // if the device has a gripper, enable the gripper to simulate a user switch
+        hapticDevice[i]->setEnableGripperUserSwitch(true);
+    }
+
+
+
+    //--------------------------------------------------------------------------
+    // WIDGETS
+    //--------------------------------------------------------------------------
+
+    // create a font
+    cFontPtr font = NEW_CFONTCALIBRI20();
+    
+    // create a label to display the haptic rate of the simulation
+    labelHapticRate = new cLabel(font);
+    labelHapticRate->m_fontColor.setWhite();
+    camera->m_frontLayer->addChild(labelHapticRate);
+
+
+    //--------------------------------------------------------------------------
+    // START SIMULATION
+    //--------------------------------------------------------------------------
+
+    // create a thread which starts the main haptics rendering loop
+    hapticsThread = new cThread();
+    hapticsThread->start(updateHaptics, CTHREAD_PRIORITY_HAPTICS);
+
+    // setup callback when application exits
+    atexit(close);
+
+    // start the main graphics rendering loop
+    glutTimerFunc(50, graphicsTimer, 0);
+    glutMainLoop();
+
+    // exit
+    return (0);
+}
+
+//------------------------------------------------------------------------------
+
+void resizeWindow(int w, int h)
+{
+    windowW = w;
+    windowH = h;
+}
+
+//------------------------------------------------------------------------------
+
+void keySelect(unsigned char key, int x, int y)
+{
+    // option ESC: exit
+    if ((key == 27) || (key == 'q'))
+    {
+        close();
+        exit(0);
+    }
+
+    // option f: toggle fullscreen
+    if (key == 'f')
+    {
+        if (fullscreen)
+        {
+            windowPosX = glutGet(GLUT_INIT_WINDOW_X);
+            windowPosY = glutGet(GLUT_INIT_WINDOW_Y);
+            windowW = glutGet(GLUT_INIT_WINDOW_WIDTH);
+            windowH = glutGet(GLUT_INIT_WINDOW_HEIGHT);
+            glutPositionWindow(windowPosX, windowPosY);
+            glutReshapeWindow(windowW, windowH);
+            fullscreen = false;
+        }
+        else
+        {
+            glutFullScreen();
+            fullscreen = true;
+        }
+    }
+
+    // option m: toggle vertical mirroring
+    if (key == 'm')
+    {
+        mirroredDisplay = !mirroredDisplay;
+        camera->setMirrorVertical(mirroredDisplay);
+    }
+
+    // Custom Reads for force input
+    //*************************************************************************************************************************************************************************************************
+    if (key == '`') {
+        mode_select = 0;
+        display_mode = true;
+    }
+    if (key == '1') {
+        mode_select = 1;
+        last_state = mode_select;
+        display_mode = true;
+    }
+    if (key == '2') {
+        mode_select = 2;
+        last_state = mode_select;
+        display_mode = true;
+    }
+    if (key == '3') {
+        mode_select = 3;
+        last_state = mode_select;
+        display_mode = true;
+    }
+    if (key == '4') {
+        mode_select = 4;
+        last_state = mode_select;
+        display_mode = true;
+    }
+    if (key == '5') {
+        mode_select = 5;
+        display_mode = true;
+    }
+    if (key == '6') {
+        mode_select = 6;
+        display_mode = true;
+    }
+    if (key == '7') {
+        mode_select = 7;
+        display_mode = true;
+    }
+    if (key == '9') {
+        mode_select = 9;
+        display_mode = true;
+    }
+}
+
+//------------------------------------------------------------------------------
+
+void close(void)
+{
+    // stop the simulation
+    simulationRunning = false;
+
+    // wait for graphics and haptics loops to terminate
+    while (!simulationFinished) { cSleepMs(100); }
+    for (int i = 0; i < numHapticDevices; i++) {
+        // close haptic device
+        hapticDevice[i]->close();
+    }
+    // delete resources
+    try {
+        //delete hapticsThread;
+        
+    }
+    catch (...) {
+        cout << "ERROR IN DELETING HAPTICS THREAD";
+    }
+    //delete world;
+    //delete handler;
+}
+
+//------------------------------------------------------------------------------
+
+void graphicsTimer(int data)
+{
+    if (simulationRunning)
+    {
+        glutPostRedisplay();
+    }
+
+    glutTimerFunc(50, graphicsTimer, 0);
+}
+
+//------------------------------------------------------------------------------
+
+void updateGraphics(void)
+{
+    /////////////////////////////////////////////////////////////////////
+    // UPDATE WIDGETS
+    /////////////////////////////////////////////////////////////////////
+
+    // display haptic rate data
+    labelHapticRate->setText(cStr(frequencyCounter.getFrequency(), 0) + " Hz");
+
+    // update position of label
+    labelHapticRate->setLocalPos((int)(0.5 * (windowW - labelHapticRate->getWidth())), 15);
+
+
+    /////////////////////////////////////////////////////////////////////
+    // RENDER SCENE
+    /////////////////////////////////////////////////////////////////////
+
+    // update shadow maps (if any)
+    world->updateShadowMaps(false, mirroredDisplay);
+
+    // render world
+    camera->renderView(windowW, windowH);
+
+    // swap buffers
+    glutSwapBuffers();
+
+    // wait until all GL commands are completed
+    glFinish();
+
+    // check for any OpenGL errors
+    GLenum err;
+    err = glGetError();
+    if (err != GL_NO_ERROR) cout << "Error:  %s\n" << gluErrorString(err);
+}
+
+//------------------------------------------------------------------------------
+
+void updateHaptics(void)
+{
+    // initialize frequency counter
+    frequencyCounter.reset();
+
+    // simulation in now running
+    simulationRunning  = true;
+    simulationFinished = false;
+
+    // main haptic simulation loop
+    while(simulationRunning)
+    {
+        // Set Number of Devices
+        const int numHapticDevices2 = 2;
+
+        // Initialize position and rotation as arrays of objects
+        cVector3d position[numHapticDevices2];
+        cMatrix3d rotation[numHapticDevices2];
+
+        // Perform actions for all haptic devices
+        for (int i = 0; i < numHapticDevices; i++) {
+            /////////////////////////////////////////////////////////////////////
+            // READ HAPTIC DEVICE
+            /////////////////////////////////////////////////////////////////////
+
+            // read position 
+            hapticDevice[i]->getPosition(position[i]);
+
+            // read orientation 
+            hapticDevice[i]->getRotation(rotation[i]);
+
+            // read user-switch status (button 0)
+            bool button = false;
+            hapticDevice[i]->getUserSwitch(0, button);
+
+
+            /////////////////////////////////////////////////////////////////////
+            // UPDATE 3D CURSOR MODEL
+            /////////////////////////////////////////////////////////////////////
+
+            // update position and orienation of cursor
+            cursor[i]->setLocalPos(position[i]);
+            cursor[i]->setLocalRot(rotation[i]);
+
+            /////////////////////////////////////////////////////////////////////
+            // COMPUTE FORCES
+            /////////////////////////////////////////////////////////////////////
+        }
+       
+        // Initialize force and torque as arrays of objects
+        cVector3d force[numHapticDevices2];
+        cVector3d torque[numHapticDevices2];
+
+        // Set default values to 0
+        for (int i = 0; i < numHapticDevices; i++) {
+            force[i] = (0, 0, 0);
+            torque[i] = (0, 0, 0);
+        }
+
+        double gripperForce = 0.0;
+        int numHapticDevices = handler->getNumDevices();
+
+        //// User Defined
+        // Initialize objects
+        cVector3d wall_limit = (0, 0, 0);
+        cVector3d relative_position[numHapticDevices2];
+        cVector3d center(0, 0, 0);
+
+        // Constants
+        const float k_spring = 50;
+        const float b_damp = 1200;
+        const float k_wall = 2000;
+        const float z_limit = -0.05; //[m]
+        const float forceThreshold = 0.01; // [N]
+        const float oscilation_magnitude_scale = 2.45 * 2000; // [Ns/m]
+        const float oscilation_decay_base = 2.7182818; // e
+        const float oscilation_frequency = 9; // [Hz]
+        const float endTime = 1000; // [ms]
+        const float max_force = 2.45;
+        const float delta = 0.0006;
+
+        // Damping information
+        const double alpha = 0.8;
+        cVector3d vh[numHapticDevices2];
+        cVector3d vh_new[numHapticDevices2];
+        cVector3d vh_old[numHapticDevices2];
+        cVector3d lastVh[numHapticDevices2];
+        cVector3d lastLastVh[numHapticDevices2];
+        cVector3d last_pos[numHapticDevices2];
+
+        // Hard Wall information
+        cVector3d v_start;
+
+        // Teleoperation information
+        const float kp1 = 100;
+        const float kp2 = 100;
+        const float kd1 = 100;
+        const float kd2 = 100;
+        const float position_scale = 2;
+        const float force_scale = 2;
+        
+       
+        // Device Selection
+        switch (mode_select) {
+     
+
+
+        case 0:
+            if (display_mode) { // Display mode once
+                cout << "Emergency Exit\n";
+                display_mode = false;
+            }
+            break;
+
+
+
+        case 1: //Spring Force Feedback
+            if (display_mode) { // Display mode once
+                cout << "Case 1\n";
+                display_mode = false;
+            }
+
+            relative_position[active_device] = position[active_device] - center;
+            force[active_device] = -k_spring * relative_position[active_device];
+            break;
+
+
+
+        case 2: //Viscous damping field
+            if (display_mode) { // Display mode once
+                cout << "Case 2\n";
+                display_mode = false;
+
+                // First time, assign default value to  previous timestep values
+                last_pos[active_device] = position[active_device];
+                lastLastVh[active_device] = (0, 0, 0);
+                lastVh[active_device] = (0, 0, 0);
+                cVector3d lastXh = position[active_device];
+
+            }
+
+            // Calculate and update velocity
+            vh_new[active_device] = (position[active_device] - last_pos[active_device]);
+            vh[active_device] = alpha * vh_new[active_device] + (1 - alpha) * vh_old[active_device];
+            vh_old[active_device] = vh[active_device];
+            last_pos[active_device] = position[active_device];
+
+            // Calculate Force
+            force[active_device] = -b_damp * vh[active_device];
+            break;
+
+
+
+        case 3: //Virtual wall
+            if (display_mode) { // Display mode once
+                cout << "Case 3\n";
+                display_mode = false;
+            }
+            
+            // Calculate relative position and force
+            center.z(z_limit);
+            relative_position[active_device] = position[active_device] - center;
+            if (relative_position[active_device].z() < 0) {
+
+                // Needs to be defined in this way
+                force[active_device] = -1 * k_wall * relative_position[active_device];
+                force[active_device].y(0);
+                force[active_device].x(0);
+            }
+            else {
+                force[active_device] = (0, 0, 0);
+            }
+            break;
+
+
+
+        case 4: //Decaying Sinusoid Wall
+            if (display_mode) { // Display mode once
+                cout << "Case 4\n";
+                display_mode = false;
+                still_touching = false;
+                begin_hard = std::chrono::steady_clock::now();
+            }
+
+            // Calculate and update velocity
+            vh_new[active_device] = (position[active_device] - last_pos[active_device]);
+            vh[active_device] = alpha * vh_new[active_device] + (1 - alpha) * vh_old[active_device];
+            vh_old[active_device] = vh[active_device];
+            last_pos[active_device] = position[active_device];
+
+            // Check if in sinusoid
+            if (still_touching) {
+                std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+                long deltaT = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - begin_hard).count();
+
+                // Check if time exceeds limit
+                if (deltaT > endTime) {
+                    still_touching = false;
+                }
+                else {
+                    // Oscillation Force Calculation
+                    force[active_device] = (-oscilation_magnitude_scale *
+                                           (v_start * pow(oscilation_decay_base, -4.0 * deltaT / double(endTime)) * 
+                                           (sin(2 * 3.14 * oscilation_frequency * deltaT * pow(10, -3)))));
+                }
+            }
+
+            // Determine Position
+            center.z(z_limit);
+            relative_position[active_device] = position[active_device] - center;
+            
+            // Check if in wall
+            if (relative_position[active_device].z() < 0) {
+                // Apply wall force
+                force[active_device] = -1 * k_wall * relative_position[active_device];
+                
+                // Check if resting on surface
+                if (!(relative_position[active_device].z() > -delta)) {
+                    begin_hard = std::chrono::steady_clock::now();
+                    
+                }
+
+                // Check if just entered wall
+                if (!still_touching) {
+                    still_touching = true;
+                    // Set new initial velocity
+                    v_start = vh[active_device];
+                }
+            }
+            // Set x, y forces to 0
+            force[active_device].y(0);
+            force[active_device].x(0);
+
+            break;
+
+
+
+        case 5: // Position Exchange
+            if (display_mode) { // Display mode once
+                cout << "Case 5\n";
+                display_mode = false;
+            }
+
+            // Update velocities for each device
+            for (int i = 0; i < numHapticDevices; i++) {
+                vh_new[i] = (position[i] - last_pos[i]);
+                vh[i] = alpha * vh_new[i] + (1 - alpha) * vh_old[i];
+                vh_old[i] = vh[i];
+            }
+
+            //// CALCULATE FORCES
+            // Calculate Leader Force
+            force[0] = kp1 * (position[1] - position[0]) + kd2 * (vh[1] - vh[0]);
+            // Calculate Follower Force
+            force[1] = kp1 * (position[0] - position[1]) + kd2 * (vh[0] - vh[1]);
+            
+            break;
+
+
+
+        case 6: //Position Scaling Position Exchange
+            if (display_mode) { // Display mode once
+                cout << "Case 6\n";
+                display_mode = false;
+            }
+            
+            // Update velocities for each device
+            for (int i = 0; i < numHapticDevices; i++) {
+                vh_new[i] = (position[i] - last_pos[i]);
+                vh[i] = alpha * vh_new[i] + (1 - alpha) * vh_old[i];
+                vh_old[i] = vh[i];
+            }
+
+            //// CALCULATE FORCES
+            // Calculate Leader Force
+            force[0] = kp1 * (position[1] - position[0] * position_scale) + kd2 * (vh[1] - vh[0]);
+            // Calculate Follower Force
+            force[1] = kp1 * (position[0] * position_scale - position[1]) + kd2 * (vh[0] - vh[1]);
+
+            break;
+
+
+
+        case 7: //Force Scaling Position Exchange
+            if (display_mode) { // Display mode once
+                cout << "Case 7\n";
+                display_mode = false;
+            }
+
+            // Update velocities for each device
+            for (int i = 0; i < numHapticDevices; i++) {
+                vh_new[i] = (position[i] - last_pos[i]);
+                vh[i] = alpha * vh_new[i] + (1 - alpha) * vh_old[i];
+                vh_old[i] = vh[i];
+            }
+
+            //// CALCULATE FORCES
+            // Calculate Leader Force
+            force[0] = kp1 * (position[1] - position[0]) + kd2 * (vh[1] - vh[0]);
+            // Calculate Follower Force
+            force[1] = force_scale * (kp1 * (position[0] - position[1]) + kd2 * (vh[0] - vh[1]));
+
+            break;
+
+
+
+        case 9: // Change Active Device
+            if (display_mode) { // Display mode once
+                active_device = abs(1 - active_device);
+                cout << "Changing to Device #" << active_device + 1 << endl;
+                display_mode = false;
+
+                mode_select = last_state;
+                
+            }
+
+            break;
+        }
+        
+        
+
+        /////////////////////////////////////////////////////////////////////
+        // APPLY FORCES
+        /////////////////////////////////////////////////////////////////////
+
+        // send computed force, torque, and gripper force to haptic devices
+        for (int i = 0; i < numHapticDevices; i++) {
+            hapticDevice[i]->setForceAndTorqueAndGripperForce(force[i], torque[i], gripperForce);
+        }
+
+        // update frequency counter
+        frequencyCounter.signal(1);
+    }
+    
+    // exit haptics thread
+    simulationFinished = true;
+}
+
+
+//------------------------------------------------------------------------------
