@@ -44,6 +44,7 @@ int last_state = 0;
 
 // Hard Wall
 bool still_touching = false;
+// Hard Wall Starting Clock Time
 std::chrono::steady_clock::time_point begin_hard = std::chrono::steady_clock::now();
 
 // Create List for Devices
@@ -260,9 +261,10 @@ int main(int argc, char* argv[])
 
     // get number of haptic devices
     numHapticDevices = handler->getNumDevices();
+    // print number of haptic devices detected
     cout << cStr(numHapticDevices) << " Devices Detected" << endl;
 
-    // Operate on each device
+    // Loop through operations for each device
     for (int i = 0; i < numHapticDevices; i++) {
         // get a handle to the first haptic device
         handler->getDevice(hapticDevice[i], i);
@@ -379,7 +381,7 @@ void keySelect(unsigned char key, int x, int y)
         camera->setMirrorVertical(mirroredDisplay);
     }
 
-    // Custom Reads for force input
+    // Custom key values for foce inputs
     //*************************************************************************************************************************************************************************************************
     if (key == '`') {
         mode_select = 0;
@@ -552,13 +554,17 @@ void updateHaptics(void)
         cVector3d force[numHapticDevices2];
         cVector3d torque[numHapticDevices2];
 
-        // Set default values to 0
+        // Perform actions on all haptic devices
         for (int i = 0; i < numHapticDevices; i++) {
+            // set forces and torques to 0
             force[i] = (0, 0, 0);
             torque[i] = (0, 0, 0);
         }
 
+        // init gripper force
         double gripperForce = 0.0;
+
+        // get number of haptic devices
         int numHapticDevices = handler->getNumDevices();
 
         //// User Defined
@@ -567,20 +573,20 @@ void updateHaptics(void)
         cVector3d relative_position[numHapticDevices2];
         cVector3d center(0, 0, 0);
 
-        // Constants
-        const float k_spring = 50;
-        const float b_damp = 1200;
-        const float k_wall = 2000;
+        // Define System Constants for Each Syste represented
+        const float k_spring = 50; // [N/m]
+        const float b_damp = 1200; // [N*s/m]
+        const float k_wall = 2000; // [N/m]
         const float z_limit = -0.05; //[m]
         const float forceThreshold = 0.01; // [N]
         const float oscilation_magnitude_scale = 2.45 * 2000; // [Ns/m]
         const float oscilation_decay_base = 2.7182818; // e
         const float oscilation_frequency = 9; // [Hz]
         const float endTime = 1000; // [ms]
-        const float max_force = 2.45;
-        const float delta = 0.0006;
+        const float max_force = 2.45; // [N]
+        const float delta = 0.0006; // [s]
 
-        // Damping information
+        // Damping variable definitions
         const double alpha = 0.8;
         cVector3d vh[numHapticDevices2];
         cVector3d vh_new[numHapticDevices2];
@@ -589,10 +595,10 @@ void updateHaptics(void)
         cVector3d lastLastVh[numHapticDevices2];
         cVector3d last_pos[numHapticDevices2];
 
-        // Hard Wall information
+        // Hard Wall variable definitions
         cVector3d v_start;
 
-        // Teleoperation information
+        // Teleoperation variable definitions
         const float kp1 = 100;
         const float kp2 = 100;
         const float kd1 = 100;
@@ -606,7 +612,7 @@ void updateHaptics(void)
      
 
 
-        case 0:
+        case 0: // Emergency Stop
             if (display_mode) { // Display mode once
                 cout << "Emergency Exit\n";
                 display_mode = false;
@@ -621,7 +627,9 @@ void updateHaptics(void)
                 display_mode = false;
             }
 
+            // Calculate the relative position of the device from the center
             relative_position[active_device] = position[active_device] - center;
+            // Calculate the spring force
             force[active_device] = -k_spring * relative_position[active_device];
             break;
 
@@ -633,6 +641,8 @@ void updateHaptics(void)
                 display_mode = false;
 
                 // First time, assign default value to  previous timestep values
+                
+                // Set the last position and velocities
                 last_pos[active_device] = position[active_device];
                 lastLastVh[active_device] = (0, 0, 0);
                 lastVh[active_device] = (0, 0, 0);
@@ -643,10 +653,11 @@ void updateHaptics(void)
             // Calculate and update velocity
             vh_new[active_device] = (position[active_device] - last_pos[active_device]);
             vh[active_device] = alpha * vh_new[active_device] + (1 - alpha) * vh_old[active_device];
+            // Set old velocity and pos to be used in next iteration
             vh_old[active_device] = vh[active_device];
             last_pos[active_device] = position[active_device];
 
-            // Calculate Force
+            // Calculate Damping Force
             force[active_device] = -b_damp * vh[active_device];
             break;
 
@@ -661,25 +672,28 @@ void updateHaptics(void)
             // Calculate relative position and force
             center.z(z_limit);
             relative_position[active_device] = position[active_device] - center;
+            // Check if the user is in the wall
             if (relative_position[active_device].z() < 0) {
 
-                // Needs to be defined in this way
+                // Define force in Z to remove user from wall
                 force[active_device] = -1 * k_wall * relative_position[active_device];
                 force[active_device].y(0);
                 force[active_device].x(0);
             }
             else {
+                // Set to free space if not in wall
                 force[active_device] = (0, 0, 0);
             }
             break;
 
 
 
-        case 4: //Decaying Sinusoid Wall
+        case 4: //Decaying Sinusoid Wall (Hard Wall)
             if (display_mode) { // Display mode once
                 cout << "Case 4\n";
                 display_mode = false;
                 still_touching = false;
+                // Find current clock value
                 begin_hard = std::chrono::steady_clock::now();
             }
 
@@ -689,9 +703,10 @@ void updateHaptics(void)
             vh_old[active_device] = vh[active_device];
             last_pos[active_device] = position[active_device];
 
-            // Check if in sinusoid
+            // Check if in decaying sinusoid while out of hard wall
             if (still_touching) {
                 std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+                // Calculate how much time has passed
                 long deltaT = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - begin_hard).count();
 
                 // Check if time exceeds limit
@@ -750,7 +765,7 @@ void updateHaptics(void)
             }
 
             //// CALCULATE FORCES
-            // Calculate Leader Force
+            // Calculate Leader Force 
             force[0] = kp1 * (position[1] - position[0]) + kd2 * (vh[1] - vh[0]);
             // Calculate Follower Force
             force[1] = kp1 * (position[0] - position[1]) + kd2 * (vh[0] - vh[1]);
@@ -774,9 +789,9 @@ void updateHaptics(void)
 
             //// CALCULATE FORCES
             // Calculate Leader Force
-            force[0] = kp1 * (position[1] - position[0] * position_scale) + kd2 * (vh[1] - vh[0]);
+            force[0] = kp1 * (position[1] - position[0] * position_scale) + kd2 * (vh[1] - vh[0]); // Scale first position by scaling factor
             // Calculate Follower Force
-            force[1] = kp1 * (position[0] * position_scale - position[1]) + kd2 * (vh[0] - vh[1]);
+            force[1] = kp1 * (position[0] * position_scale - position[1]) + kd2 * (vh[0] - vh[1]); // Scale first position by scaling factor
 
             break;
 
@@ -799,7 +814,7 @@ void updateHaptics(void)
             // Calculate Leader Force
             force[0] = kp1 * (position[1] - position[0]) + kd2 * (vh[1] - vh[0]);
             // Calculate Follower Force
-            force[1] = force_scale * (kp1 * (position[0] - position[1]) + kd2 * (vh[0] - vh[1]));
+            force[1] = force_scale * (kp1 * (position[0] - position[1]) + kd2 * (vh[0] - vh[1])); // Scale total force by scaling factor
 
             break;
 
